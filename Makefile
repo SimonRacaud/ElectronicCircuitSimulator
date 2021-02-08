@@ -1,31 +1,33 @@
 ##
-## EPITECH PROJECT, 2019
-## Makefile
+## EPITECH PROJECT, 2021
+## makefile
 ## File description:
-## task01
+## project makefile
 ##
 
-SRC =	src/main.cpp			\
+SRC =   src/main.cpp						\
+		src/Class/Circuit/Circuit.cpp		\
+		src/Class/Component/Component.cpp	\
 
-CFLAGS = -std=gnu11 -Wall -Wextra -g
+OBJ =   $(SRC:.cpp=.o)
 
-NAME = nanotekspice
+NAME =	nanotekspice
 
-OBJ	=	$(SRC:.cpp=.o)
+INCLUDE =	-I include -I include/Interface
+CXXFLAGS =	$(INCLUDE) -Wall -Wextra
+
+all:    $(NAME)
+
+$(NAME):    $(OBJ)
+		g++ -o $(NAME) $(OBJ)
 
 clean:
-	rm -f $(OBJ)
+		rm -f $(OBJ)
 
-fclean:	clean
-	rm -f $(NAME)
+fclean: clean
+		rm -f $(OBJ)
+		rm -f $(NAME)
 
-tests_run:
-	echo "No test"
-	#g++ -o test $(SRC) -lcriterion --coverage;./test
-
-re:	fclean	all
-
-auteur:
-	echo $(USER) > auteur
+re: fclean all
 
 .PHONY: all clean fclean
