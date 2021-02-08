@@ -9,7 +9,7 @@ SRC =   src/main.cpp						\
 		src/Class/Circuit/Circuit.cpp		\
 		src/Class/Component/Component.cpp	\
 		src/Class/Parser/Parser.cpp			\
-		src/Class/Error/Error.cpp			\
+		src/Class/Exception/Error/Error.cpp			\
 
 OBJ =   $(SRC:.cpp=.o)
 
