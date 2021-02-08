@@ -8,12 +8,14 @@
 SRC =   src/main.cpp						\
 		src/Class/Circuit/Circuit.cpp		\
 		src/Class/Component/Component.cpp	\
+		src/Class/Parser/Parser.cpp			\
+		src/Class/Error/Error.cpp			\
 
 OBJ =   $(SRC:.cpp=.o)
 
 NAME =	nanotekspice
 
-INCLUDE =	-I include -I include/Interface
+INCLUDE =	-I include -I include/Interface -I src/
 CXXFLAGS =	$(INCLUDE) -Wall -Wextra
 
 all:    $(NAME)
