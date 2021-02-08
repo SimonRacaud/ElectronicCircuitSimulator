@@ -14,8 +14,8 @@ namespace nts
 {
     enum Tristate
     {
-        UNDEFINED = ( - true ) ,
-        TRUE = true ,
+        UNDEFINED = (-true),
+        TRUE = true,
         FALSE = false
     };
 
