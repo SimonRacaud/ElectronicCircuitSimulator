@@ -47,8 +47,7 @@ std::list<std::string> nts::Parser::readFile(const std::string &filepath)
 void nts::Parser::parsingFile(const std::string &filepath, nts::Circuit *dest)
 {
     std::list<std::string> file = nts::Parser::readFile(filepath);
-    std::list<std::string>::iterator links = std::find_if(file.begin(),
-    file.end(), [&](std::string str){ return str == LINKS;});
+    std::list<std::string>::iterator links = std::find_if(file.begin(), file.end(), [&](std::string str){ return str == LINKS;});
     std::list<std::string>::iterator chipsets = std::find_if(file.begin(),
     file.end(), [&](std::string str){ return str == CHIPSETS;});
 
@@ -58,12 +57,15 @@ void nts::Parser::parsingFile(const std::string &filepath, nts::Circuit *dest)
     std::map<std::string, std::string> mapChipsets = nts::Parser::cutAt(' ', chipsets, links);
     links++;
     std::map<std::string, std::string> mapLinks = nts::Parser::cutAt(' ', links, file.end());
-    //std::tuple<std::string, std::string, std::string, std::string> nts::Parser::cleanLink(mapLinks, mapChipsets);
+    std::list<std::tuple<std::string, std::string, std::string, std::string>> allLinks = nts::Parser::cleanLink(mapLinks, mapChipsets);
     /*for (const auto& m : mapChipsets) {
         std::cout << m.first << " = " << m.second << ";" << std::endl;
     }
     for (const auto& m : mapLinks) {
         std::cout << m.first << " = " << m.second << ";" << std::endl;
+    }
+    for (const auto& m : allLinks) {
+        std::cout << std::get<0>(m) << "|" << std::get<1>(m) << "|" << std::get<2>(m) << "|" << std::get<3>(m) << "|" << std::endl;
     }
     std::cout << mapChipsets.size() << "|" << mapLinks.size() << std::endl;*/
 }
@@ -84,4 +86,33 @@ std::map<std::string, std::string> nts::Parser::cutAt(const char c, std::list<st
         }
     }
     return map;
+}
+
+std::list<std::tuple<std::string, std::string, std::string, std::string>> nts::Parser::cleanLink(
+    std::map<std::string, std::string> mapLinks,
+    std::map<std::string, std::string> mapChipsets
+)
+{
+    size_t found_one;
+    size_t found_two;
+    std::string one;
+    std::string two;
+    std::string three;
+    std::string four;
+    std::list<std::tuple<std::string, std::string, std::string, std::string>> tuple;
+
+    for (const auto& m : mapLinks) {
+        //std::cout << m.first << " = " << m.second << ";" << std::endl;
+        found_one = (m.first).find(TOKEN);
+        found_two = (m.second).find(TOKEN);
+        if (found_one == std::string::npos || found_two == std::string::npos)
+            throw ParsingError("Parsing", "Token not found links");
+        one = (m.first).substr(1, found_one - 1);
+        two = (m.first).substr(found_one + 1, (m.first).length());
+        three = (m.second).substr(0, found_two);
+        four = (m.second).substr(found_two + 1, (m.second).length());
+        //std::cout << one << "|" << two << "|" << three << "|" << four << "|" << std::endl;
+        tuple.push_back(make_tuple(one, two, three, four));
+    }
+    return tuple;
 }
