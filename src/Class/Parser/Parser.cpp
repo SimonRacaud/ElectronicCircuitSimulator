@@ -44,7 +44,7 @@ std::list<std::string> nts::Parser::readFile(const std::string &filepath)
     return all_file;
 }
 
-void nts::Parser::parsingFile(const std::string &filepath, nts::Circuit *dest)
+void nts::Parser::parsingFile(const std::string &filepath, nts::Circuit &dest)
 {
     std::list<std::string> file = nts::Parser::readFile(filepath);
     std::list<std::string>::iterator links = std::find_if(file.begin(), file.end(), [&](std::string str){ return str == LINKS;});

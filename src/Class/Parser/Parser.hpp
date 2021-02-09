@@ -28,7 +28,7 @@ namespace nts
     class Parser
     {
         public :
-            static void parsingFile(const std::string &filepath, nts::Circuit *dest);
+            static void parsingFile(const std::string &filepath, nts::Circuit &dest);
 
         private :
             static std::list<std::string> readFile(const std::string &filepath);
