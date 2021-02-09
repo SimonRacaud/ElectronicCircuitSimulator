@@ -78,9 +78,7 @@ std::map<std::string, std::string> nts::Parser::cutAt(const char c, std::list<st
     for (std::list<std::string>::iterator it = start; it != end; it++) {
         found = (*it).find(c);
         if (found != std::string::npos) {
-            //std::cout << (*it).substr(0, found) << "|" << (*it).substr(found + 1, (*it).length()) << std::endl;
-            //map[(*it).substr(0, found)] = (*it).substr(found, (*it).length());
-            map[(*it).substr(found, (*it).length())] = (*it).substr(0, found);
+            map[(*it).substr(found + 1, (*it).length())] = (*it).substr(0, found);
         } else {
             throw ParsingError("Parsing", "Token not found");
         }
@@ -102,16 +100,16 @@ std::list<std::tuple<std::string, std::string, std::string, std::string>> nts::P
     std::list<std::tuple<std::string, std::string, std::string, std::string>> tuple;
 
     for (const auto& m : mapLinks) {
-        //std::cout << m.first << " = " << m.second << ";" << std::endl;
         found_one = (m.first).find(TOKEN);
         found_two = (m.second).find(TOKEN);
         if (found_one == std::string::npos || found_two == std::string::npos)
             throw ParsingError("Parsing", "Token not found links");
-        one = (m.first).substr(1, found_one - 1);
+        one = (m.first).substr(0, found_one);
         two = (m.first).substr(found_one + 1, (m.first).length());
         three = (m.second).substr(0, found_two);
         four = (m.second).substr(found_two + 1, (m.second).length());
-        //std::cout << one << "|" << two << "|" << three << "|" << four << "|" << std::endl;
+        if (mapChipsets.find(one) == mapChipsets.end() || mapChipsets.find(three) == mapChipsets.end())
+            throw ParsingError("Parsing", "Undifined variable");
         tuple.push_back(make_tuple(one, two, three, four));
     }
     return tuple;
