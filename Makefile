@@ -5,17 +5,19 @@
 ## project makefile
 ##
 
-SRC =   src/main.cpp						\
-		src/Class/Circuit/Circuit.cpp		\
-		src/Class/Component/Component.cpp	\
-		src/Class/Parser/Parser.cpp			\
-		src/Class/Exception/Error/Error.cpp			\
+SRC =   src/main.cpp										\
+		src/Class/Circuit/Circuit.cpp						\
+		src/Class/Component/Component.cpp					\
+		src/Class/Parser/Parser.cpp							\
+		src/Class/Exception/Error/Error.cpp					\
+		src/Modele/Output/Output.cpp						\
+		src/Modele/ComponentContent/ComponentContent.cpp	\
 
 OBJ =   $(SRC:.cpp=.o)
 
 NAME =	nanotekspice
 
-INCLUDE =	-I include -I include/Interface -I src/
+INCLUDE =	-I include -I include/Interface -I src/ -I src/Class/Exception
 CXXFLAGS =	$(INCLUDE) -Wall -Wextra
 
 all:    $(NAME)
