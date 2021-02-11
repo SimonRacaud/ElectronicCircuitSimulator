@@ -13,7 +13,7 @@
 #if !defined(H_COMPONENT_TYPE_EXCEPTION)
 #define H_COMPONENT_TYPE_EXCEPTION
 
-#include "Error.hpp"
+#include "Error/Error.hpp"
 
 class ComponentTypeException : public ManageError {
   public:

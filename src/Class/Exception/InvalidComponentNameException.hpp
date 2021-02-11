@@ -13,7 +13,7 @@
 #ifndef INVALID_COMPONENT_NAME_HPP_
 #define INVALID_COMPONENT_NAME_HPP_
 
-#include "Error.hpp"
+#include "Error/Error.hpp"
 
 class InvalidComponentNameException : public ManageError {
   public:

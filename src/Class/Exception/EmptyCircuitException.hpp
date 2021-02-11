@@ -13,7 +13,7 @@
 #ifndef EMPTYCIRCUIT_HPP_
 #define EMPTYCIRCUIT_HPP_
 
-#include "Error.hpp"
+#include "Error/Error.hpp"
 
 class EmptyCircuitException : public ManageError {
   public:

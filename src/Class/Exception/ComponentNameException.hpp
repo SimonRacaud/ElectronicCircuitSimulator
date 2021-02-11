@@ -13,7 +13,7 @@
 #ifndef COMPONENTNAMEEXCEPTION_H
 #define COMPONENTNAMEEXCEPTION_H
 	
-#include "Error.hpp"
+#include "Error/Error.hpp"
 
 class ComponentNameException : public ManageError {
   public:

@@ -10,14 +10,14 @@
  * Copyright 2021 - 2021 TEK2, Epitech
  */
 
-#ifndef UNDEFINED_PIN_HPP_
-#define UNDEFINED_PIN_HPP_
+#ifndef BUSY_PIN_HPP_
+#define BUSY_PIN_HPP_
 
 #include "Error/Error.hpp"
 
-class UndefinedPinException : public ManageError {
+class BusyPinException : public ManageError {
   public:
-    UndefinedPinException(std::string const &message = "Standard", std::string const &component = "Initialisation") : ManageError(message, component)
+    BusyPinException(std::string const &message = "Standard", std::string const &component = "Initialisation") : ManageError(message, component)
     {
     }
 };

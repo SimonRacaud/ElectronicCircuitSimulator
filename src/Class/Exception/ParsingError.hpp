@@ -8,7 +8,7 @@
 #ifndef PARSINGERROR_HPP_
 #define PARSINGERROR_HPP_
 
-#include "Error.hpp"
+#include "Error/Error.hpp"
 
 class ParsingError : public ManageError {
   public:
