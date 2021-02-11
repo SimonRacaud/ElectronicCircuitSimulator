@@ -50,7 +50,7 @@ void Component::simulate(std::size_t tick)
     }
 }
 
-Tristate Component::compute(std::size_t pin)
+Tristate Component::compute(__attribute__((unused))std::size_t pin)
 {
     return UNDEFINED;
 }
@@ -106,4 +106,9 @@ ComponentContent &Component::getContent() const
 const std::string &Component::getName() const
 {
     return this->_name;
+}
+
+ComponentType Component::getType() const
+{
+    return this->_type;
 }

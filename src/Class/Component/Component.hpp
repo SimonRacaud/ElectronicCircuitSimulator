@@ -38,6 +38,7 @@ namespace nts
 
             ComponentContent &getContent() const;
             const std::string &getName() const;
+            ComponentType getType() const;
     };
 }
 
