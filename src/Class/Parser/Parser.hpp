@@ -8,7 +8,7 @@
 #ifndef PARSER_H_
 #define PARSER_H_
 
-#include "Class/Error/ParsingError.hpp"
+#include "Class/Exception/ParsingError.hpp"
 #include "Class/Circuit/Circuit.hpp"
 
 namespace nts
