@@ -5,3 +5,5 @@ nanotekspice
 *.gcda
 *.gcno
 *.o
+vgcore.*
+tmp*
