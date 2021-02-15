@@ -4,7 +4,7 @@ using namespace nts;
 
 FalseComponent::FalseComponent(Tristate state, IComponent &component) : InputComponent(state, component)
 {
-
+    this->setState(FALSE);
 }
 
 void FalseComponent::simulate(size_t time)

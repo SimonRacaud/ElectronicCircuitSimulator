@@ -5,13 +5,17 @@
 ## project makefile
 ##
 
-SRC =   src/main.cpp										\
-		src/Class/Circuit/Circuit.cpp						\
-		src/Class/Component/Component.cpp					\
-		src/Class/Parser/Parser.cpp							\
-		src/Class/Exception/Error/Error.cpp					\
-		src/Modele/Output/Output.cpp						\
-		src/Modele/ComponentContent/ComponentContent.cpp	\
+SRC =   src/main.cpp																\
+		src/Class/Circuit/Circuit.cpp												\
+		src/Class/Component/Component.cpp											\
+		src/Class/Component/Input/InputComponent.cpp								\
+		src/Class/Component/Input/ClockComponent/ClockComponent.cpp					\
+		src/Class/Component/Input/FalseComponent/FalseComponent.cpp					\
+		src/Class/Component/Input/TrueComponent/TrueComponent.cpp					\
+		src/Class/Parser/Parser.cpp													\
+		src/Class/Exception/Error/Error.cpp											\
+		src/Modele/Output/Output.cpp												\
+		src/Modele/ComponentContent/ComponentContent.cpp							\
 
 OBJ =   $(SRC:.cpp=.o)
 
