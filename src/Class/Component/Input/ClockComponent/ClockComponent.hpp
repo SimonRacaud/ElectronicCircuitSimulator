@@ -13,9 +13,6 @@ namespace nts
 
 			void simulate(size_t time);
             Tristate compute(size_t pin);
-		
-		private:
-			size_t _localTime;
 	};
 
 }

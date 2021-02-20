@@ -2,7 +2,7 @@
 
 using namespace nts;
 
-ClockComponent::ClockComponent(Tristate state, IComponent &component) : InputComponent(state, component), _localTime(0)
+ClockComponent::ClockComponent(Tristate state, IComponent &component) : InputComponent(state, component)
 {
     this->setState(TRUE);
 }
@@ -16,9 +16,9 @@ void ClockComponent::simulate(size_t time)
 Tristate ClockComponent::compute(size_t pin)
 {
     (void) pin;
-    Tristate pinValue = (this->_localTime % 2 == 0) ? TRUE : FALSE;
+    Tristate pinValue = this->getState();
 
+    pinValue = (pinValue == TRUE) ? FALSE : TRUE;
     this->setState(pinValue);
-    this->_localTime++;
     return pinValue;
 }
