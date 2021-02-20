@@ -32,13 +32,13 @@ void InputComponent::setInputValue(Tristate state)
     this->setState(state);
 }
 
-
 Tristate InputComponent::compute(size_t pin)
 {
+	(void) pin;
 	return this->getState();
 }
 
 void InputComponent::simulate(size_t time)
 {
-
+	(void) time;
 }
