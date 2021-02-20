@@ -10,19 +10,20 @@
  * Copyright 2021 - 2021 TEK2, Epitech
  */
 
-#include "Component.hpp"
-#include "Class/Exception/UndefinedPinException.hpp"
 #include "Class/Exception/BusyPinException.hpp"
+#include "Class/Exception/UndefinedPinException.hpp"
+#include "Component.hpp"
 
 using namespace nts;
 
-Component::Component(const std::string &name, ComponentType type): _name(name), _type(type)
+Component::Component(const std::string &name, ComponentType type)
+    : _name(name), _type(type)
 {
 }
 
 Component::~Component()
 {
-    std::unordered_map<size_t, Output*>::iterator it;
+    std::unordered_map<size_t, Output *>::iterator it;
 
     while (this->_outputs.empty() == true) {
         it = this->_outputs.erase(this->_outputs.begin());
@@ -35,7 +36,8 @@ Tristate Component::getState(size_t pinOut)
     auto it = this->_outputs.find(pinOut);
 
     if (it == this->_outputs.end()) {
-        throw UndefinedPinException("undefined out pin", "Componenent::getState");
+        throw UndefinedPinException(
+            "undefined out pin", "Componenent::getState");
     }
     return it->second->getState();
 }
@@ -50,12 +52,13 @@ void Component::simulate(std::size_t tick)
     }
 }
 
-Tristate Component::compute(__attribute__((unused))std::size_t pin)
+Tristate Component::compute(__attribute__((unused)) std::size_t pin)
 {
     return UNDEFINED;
 }
 
-void Component::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
+void Component::setLink(
+    std::size_t pin, IComponent &other, std::size_t otherPin)
 {
     Component &otherCom = dynamic_cast<Component &>(other);
     auto outPin = this->_outputs.find(pin);
@@ -74,22 +77,22 @@ void Component::dump() const
 {
     std::string typeNames[4] = {"INPUT", "OUTPUT", "BOTH", "OTHER"};
     std::unordered_map<Tristate, std::string> stateNames = {
-        {UNDEFINED, "UNDEFINED"}, 
-        {TRUE, "TRUE"},
-        {FALSE, "FALSE"}
-    };
+        {UNDEFINED, "UNDEFINED"}, {TRUE, "TRUE"}, {FALSE, "FALSE"}};
     std::string name;
 
-    std::cout << "Component: " << _name << " " << typeNames[_type] << std::endl;
+    std::cout << "Component: " << _name << " " << typeNames[_type]
+              << std::endl;
     std::cout << "Inputs:" << std::endl;
     for (auto it = this->_inputs.begin(); it != this->_inputs.end(); it++) {
-        std::cout << "\t" << dynamic_cast<Component *>(it->second)->_name << std::endl;
+        std::cout << "\t" << dynamic_cast<Component *>(it->second)->_name
+                  << std::endl;
     }
     std::cout << "Outputs:" << std::endl;
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
         name = dynamic_cast<Component *>(&it->second->getComponent())->_name;
-        std::cout << "\t" << name << ": " << stateNames[it->second->getState()] << std::endl;
-    } 
+        std::cout << "\t" << name << ": " << stateNames[it->second->getState()]
+                  << std::endl;
+    }
     std::cout << std::endl;
 }
 
@@ -111,4 +114,14 @@ const std::string &Component::getName() const
 ComponentType Component::getType() const
 {
     return this->_type;
+}
+
+void Component::setState(__attribute__((unused)) Tristate state)
+{
+    throw ComponentTypeException(
+        "set state not supported", "component::setState");
+    ///// <<<< to define in sub components that support the feature
+    // for (auto it = this->_outputs.begin(); it != this->_outputs; it++) {
+    //     it->second->setState(state);
+    // }
 }

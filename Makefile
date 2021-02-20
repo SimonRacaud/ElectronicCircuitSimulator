@@ -14,6 +14,7 @@ SRC =   src/main.cpp																\
 		src/Class/Component/Input/TrueComponent/TrueComponent.cpp					\
 		src/Class/Parser/Parser.cpp													\
 		src/Class/Exception/Error/Error.cpp											\
+		src/Class/CommandLine/CommandLine.cpp										\
 		src/Modele/Output/Output.cpp												\
 		src/Modele/ComponentContent/ComponentContent.cpp							\
 
@@ -22,7 +23,7 @@ OBJ =   $(SRC:.cpp=.o)
 NAME =	nanotekspice
 
 INCLUDE =	-I include -I include/Interface -I src/ -I src/Class/Exception
-CXXFLAGS =	$(INCLUDE) -Wall -Wextra
+CXXFLAGS =	$(INCLUDE) -Wall -Wextra -g
 
 all:    $(NAME)
 
