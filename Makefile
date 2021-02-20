@@ -8,6 +8,7 @@
 SRC =   src/main.cpp																\
 		src/Class/Circuit/Circuit.cpp												\
 		src/Class/Component/Component.cpp											\
+		src/Class/Component/Output/OutputComponent.cpp								\
 		src/Class/Component/Input/InputComponent.cpp								\
 		src/Class/Component/Input/ClockComponent/ClockComponent.cpp					\
 		src/Class/Component/Input/FalseComponent/FalseComponent.cpp					\
