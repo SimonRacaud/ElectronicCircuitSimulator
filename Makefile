@@ -13,6 +13,12 @@ SRC =   src/main.cpp																\
 		src/Modele/Output/Output.cpp												\
 		src/Modele/Input/Input.cpp													\
 		src/Modele/ComponentContent/ComponentContent.cpp							\
+		src/Operator/Tristate/TristateOperators.cpp									\
+		src/Class/Gate/Gate.cpp														\
+		src/Class/Gate/Or/OrGate.cpp												\
+		src/Class/Gate/And/AndGate.cpp												\
+		src/Class/Gate/Not/NotGate.cpp												\
+		src/Class/Gate/Xor/XorGate.cpp												\
 		$(addprefix $(DIR_COMPONENT), $(SRC_COMPONENT))																				\
 
 DIR_COMPONENT = src/Class/Component
