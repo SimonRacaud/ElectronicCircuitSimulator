@@ -12,6 +12,7 @@
 #include "ComponentType.hpp"
 #include "IComponent.hpp"
 #include "Modele/ComponentContent/ComponentContent.hpp"
+#include "Modele/Input/Input.hpp"
 #include "Modele/Output/Output.hpp"
 
 #include <string>
@@ -19,11 +20,13 @@
 
 namespace nts
 {
+    class Input;
+
     class Component : public IComponent {
       protected:
         std::string _name;
         ComponentType _type;
-        std::unordered_map<size_t, IComponent *> _inputs;
+        std::unordered_map<size_t, Input *> _inputs;
         std::unordered_map<size_t, Output *> _outputs;
 
       public:
