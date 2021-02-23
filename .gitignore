@@ -7,3 +7,4 @@ nanotekspice
 *.o
 vgcore.*
 tmp*
+log.bin

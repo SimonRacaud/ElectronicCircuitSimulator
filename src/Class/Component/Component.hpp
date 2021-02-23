@@ -26,8 +26,6 @@ namespace nts
         std::unordered_map<size_t, IComponent *> _inputs;
         std::unordered_map<size_t, Output *> _outputs;
 
-        Tristate getState(size_t pinOut);
-
       public:
         Component(const std::string &name = "", ComponentType type = OTHER);
         ~Component();
@@ -38,6 +36,7 @@ namespace nts
             std::size_t pin, nts::IComponent &other, std::size_t otherPin);
         void dump() const;
 
+        Tristate getState(size_t pinOut);
         ComponentContent &getContent() const;
         const std::string &getName() const;
         ComponentType getType() const;

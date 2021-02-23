@@ -18,6 +18,7 @@ SRC =   src/main.cpp																\
 		src/Class/CommandLine/CommandLine.cpp										\
 		src/Modele/Output/Output.cpp												\
 		src/Modele/ComponentContent/ComponentContent.cpp							\
+		src/Class/Component/Output/LoggerComponent/LoggerComponent.cpp				\
 
 OBJ =   $(SRC:.cpp=.o)
 

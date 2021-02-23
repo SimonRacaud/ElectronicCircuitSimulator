@@ -7,33 +7,13 @@ OutputComponent::OutputComponent(Tristate state, IComponent &component)
 {
 }
 
-Tristate OutputComponent::getState() const
-{
-	return this->_state;
-}
-
-IComponent &OutputComponent::getComponent() const
-{
-	return this->_component;
-}
-
-void OutputComponent::setState(Tristate state)
-{
-	this->_state = state;
-}
-
-void OutputComponent::setComponent(IComponent &component)
-{
-	this->_component = component;
-}
-
 Tristate OutputComponent::compute(size_t pin)
 {
-    (void) pin;
-	return this->getState();
+	return UNDEFINED;
 }
 
 void OutputComponent::simulate(size_t time)
 {
-    (void) time;
+	(void) time;
+	this->compute(0);
 }
