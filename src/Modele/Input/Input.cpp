@@ -14,9 +14,14 @@
 
 using namespace nts;
 
-Input::Input(size_t pinOut, IComponent &component)
-    : _pinOut(pinOut), _component(component)
+Input::Input() : _pinOut(0), _component(nullptr)
 {
+}
+
+void Input::initialize(size_t pinOut, IComponent &component)
+{
+    _pinOut = pinOut;
+    _component = &component;
 }
 
 size_t Input::getPinOut() const
@@ -26,7 +31,7 @@ size_t Input::getPinOut() const
 
 IComponent &Input::getComponent() const
 {
-    return this->_component;
+    return *this->_component;
 }
 
 void Input::setPinOut(size_t pinOut)
@@ -36,10 +41,10 @@ void Input::setPinOut(size_t pinOut)
 
 void Input::setComponent(IComponent &component)
 {
-    this->_component = component;
+    this->_component = &component;
 }
 
 Tristate Input::getState(void)
 {
-    return dynamic_cast<Component *>(&_component)->getState(_pinOut);
+    return dynamic_cast<Component *>(_component)->getState(_pinOut);
 }

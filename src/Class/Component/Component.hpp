@@ -33,6 +33,9 @@ namespace nts
         Component(const std::string &name = "", ComponentType type = OTHER);
         ~Component();
 
+        void createInputs(const size_t *pins, size_t size);
+        void createOutputs(const size_t *pins, size_t size);
+
         void simulate(std::size_t tick);
         nts::Tristate compute(std::size_t pin);
         void setLink(

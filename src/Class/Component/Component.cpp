@@ -36,6 +36,20 @@ Component::~Component()
     }
 }
 
+void Component::createInputs(const size_t *pins, size_t size)
+{
+    for (size_t i = 0; i < size; i++) {
+        this->_inputs[pins[i]] = new Input();
+    }
+}
+
+void Component::createOutputs(const size_t *pins, size_t size)
+{
+    for (size_t i = 0; i < size; i++) {
+        this->_outputs[pins[i]] = new Output();
+    }
+}
+
 Tristate Component::getState(size_t pinOut)
 {
     auto it = this->_outputs.find(pinOut);
@@ -72,15 +86,14 @@ void Component::setLink(
     auto outPin = this->_outputs.find(pin);
     auto inPin = otherCom._inputs.find(otherPin);
 
-    if (inPin != otherCom._inputs.end()
-        && &inPin->second->getComponent() != this) {
-        throw BusyPinException("Input Pin already used", "setLink");
+    if (inPin == otherCom._inputs.end()) {
+        throw UndefinedPinException("Input Pin does not exist", "setLink");
     }
-    if (outPin != this->_outputs.end()) {
-        delete this->_outputs[pin];
+    if (outPin == this->_outputs.end()) {
+        throw UndefinedPinException("Output Pin does not exist", "setLink");
     }
-    this->_outputs[pin] = new Output(UNDEFINED, other);
-    otherCom._inputs[otherPin] = new Input(pin, *this);
+    this->_outputs[pin]->initialize(UNDEFINED, other);
+    otherCom._inputs[otherPin]->initialize(pin, *this);
 }
 
 void Component::dump() const

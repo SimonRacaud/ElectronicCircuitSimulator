@@ -21,7 +21,9 @@ namespace nts
 {
     class Input {
       public:
-        Input(size_t pinOut, IComponent &component);
+        Input(void);
+
+        void initialize(size_t pinOut, IComponent &component);
 
         size_t getPinOut() const;
         IComponent &getComponent() const;
@@ -33,7 +35,7 @@ namespace nts
 
       private:
         size_t _pinOut;
-        IComponent &_component;
+        IComponent *_component;
     };
 
 } // namespace nts

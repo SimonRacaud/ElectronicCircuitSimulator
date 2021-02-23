@@ -14,28 +14,32 @@
 
 using namespace nts;
 
-Output::Output(Tristate state, IComponent &component)
-    : _state(state), _component(component)
+Output::Output() : _state(UNDEFINED), _component(nullptr)
 {
-    
+}
+
+void Output::initialize(Tristate state, IComponent &component)
+{
+    _state = state;
+    _component = &component;
 }
 
 Tristate Output::getState() const
 {
-	return _state;
+    return _state;
 }
 
 IComponent &Output::getComponent() const
 {
-	return _component;
+    return *_component;
 }
 
 void Output::setState(Tristate state)
 {
-	this->_state = state;
+    this->_state = state;
 }
 
 void Output::setComponent(IComponent &component)
 {
-	this->_component = component;
+    this->_component = &component;
 }
