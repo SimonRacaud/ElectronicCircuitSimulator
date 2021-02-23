@@ -31,7 +31,7 @@ SRC_COMPONENT = /Component.cpp											\
 				/Input/TrueComponent/TrueComponent.cpp					\
 				/Output/LoggerComponent/LoggerComponent.cpp				\
 				/Factory/Factory.cpp									\
-				#/Other/4001/C4001.cpp									\
+				/Other/4001/C4001.cpp									\
 
 OBJ =   $(SRC:.cpp=.o)
 

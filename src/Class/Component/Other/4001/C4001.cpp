@@ -21,10 +21,10 @@ C4001::C4001() : Component("4001", OTHER), _nbGate(4)
 
     this->createInputs(pinIn, 8);
     this->createOutputs(pinOut, 4);
-    this->_gate[0] = new OrGate(*_inputs[1], *_inputs[2], *_outputs[3]);
-    this->_gate[1] = new OrGate(*_inputs[5], *_inputs[6], *_outputs[4]);
-    this->_gate[2] = new OrGate(*_inputs[12], *_inputs[13], *_outputs[11]);
-    this->_gate[3] = new OrGate(*_inputs[8], *_inputs[9], *_outputs[10]);
+    this->_gates[0] = new OrGate(*_inputs[1], *_inputs[2], *_outputs[3]);
+    this->_gates[1] = new OrGate(*_inputs[5], *_inputs[6], *_outputs[4]);
+    this->_gates[2] = new OrGate(*_inputs[12], *_inputs[13], *_outputs[11]);
+    this->_gates[3] = new OrGate(*_inputs[8], *_inputs[9], *_outputs[10]);
 }
 
 C4001::~C4001()
@@ -34,6 +34,6 @@ C4001::~C4001()
 nts::Tristate C4001::compute(std::size_t pin)
 {
     for (size_t i = 0; i < _nbGate; i++) {
-        this->_gate[i]->updateOutput();
+        this->_gates[i]->updateOutput();
     }
 }
