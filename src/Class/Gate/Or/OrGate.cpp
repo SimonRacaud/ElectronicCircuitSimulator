@@ -14,11 +14,11 @@
 
 using namespace nts;
 
-OrGate::OrGate(Input &a, Input &b, Output &out) : Gate(a, b, out)
+OrGate::OrGate(Input &a, Input &b) : Gate(a, b)
 {
 }
 
-void OrGate::updateOutput(void)
+Tristate OrGate::compute(void)
 {
-    this->_out->setState(_a->getState() | _b->getState());
+    return (_a->getState() | _b->getState());
 }

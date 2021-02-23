@@ -14,7 +14,7 @@
 
 using namespace nts;
 
-Gate::Gate(Input &a, Input &b, Output &out) : _a(&a), _b(&b), _out(&out)
+Gate::Gate(Input &a, Input &b) : _a(&a), _b(&b)
 {
 }
 

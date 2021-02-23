@@ -20,10 +20,10 @@ namespace nts
 {
     class NotGate : public Gate {
       public:
-        NotGate(Input &a, Output &out);
+        NotGate(Input &a);
         virtual ~NotGate() = default;
 
-        void updateOutput(void);
+        Tristate compute(void);
     };
 } // namespace nts
 

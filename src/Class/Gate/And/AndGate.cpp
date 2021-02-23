@@ -14,11 +14,11 @@
 
 using namespace nts;
 
-AndGate::AndGate(Input &a, Input &b, Output &out) : Gate(a, b, out)
+AndGate::AndGate(Input &a, Input &b) : Gate(a, b)
 {
 }
 
-void AndGate::updateOutput(void)
+Tristate AndGate::compute(void)
 {
-    this->_out->setState(_a->getState() & _b->getState());
+    return _a->getState() & _b->getState();
 }

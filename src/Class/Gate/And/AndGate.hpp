@@ -20,10 +20,10 @@ namespace nts
 {
     class AndGate : public Gate {
       public:
-        AndGate(Input &a, Input &b, Output &out);
+        AndGate(Input &a, Input &b);
         virtual ~AndGate() = default;
 
-        void updateOutput(void);
+        Tristate compute(void);
     };
 } // namespace nts
 

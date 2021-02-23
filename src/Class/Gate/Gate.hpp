@@ -21,15 +21,14 @@ namespace nts
 {
     class Gate {
       public:
-        Gate(Input &a, Input &b, Output &out);
+        Gate(Input &a, Input &b);
         virtual ~Gate();
 
-        virtual void updateOutput(void) = 0;
+        virtual Tristate compute(void) = 0;
 
       protected:
         Input *_a;
         Input *_b;
-        Output *_out;
     };
 } // namespace nts
 

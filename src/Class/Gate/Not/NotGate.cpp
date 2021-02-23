@@ -14,11 +14,11 @@
 
 using namespace nts;
 
-NotGate::NotGate(Input &a, Output &out) : Gate(a, a, out)
+NotGate::NotGate(Input &a) : Gate(a, a)
 {
 }
 
-void NotGate::updateOutput(void)
+Tristate NotGate::compute(void)
 {
-    this->_out->setState(!_a->getState());
+    return !_a->getState();
 }

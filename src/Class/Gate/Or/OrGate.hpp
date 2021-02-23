@@ -20,10 +20,10 @@ namespace nts
 {
     class OrGate : public Gate {
       public:
-        OrGate(Input &a, Input &b, Output &out);
+        OrGate(Input &a, Input &b);
         virtual ~OrGate() = default;
 
-        void updateOutput(void);
+        Tristate compute(void);
     };
 } // namespace nts
 

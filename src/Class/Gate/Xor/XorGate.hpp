@@ -20,10 +20,10 @@ namespace nts
 {
     class XorGate : public Gate {
       public:
-        XorGate(Input &a, Input &b, Output &out);
+        XorGate(Input &a, Input &b);
         virtual ~XorGate() = default;
 
-        void updateOutput(void);
+        Tristate compute(void);
     };
 } // namespace nts
 
