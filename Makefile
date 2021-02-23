@@ -19,6 +19,7 @@ SRC =   src/main.cpp																\
 		src/Modele/Output/Output.cpp												\
 		src/Modele/ComponentContent/ComponentContent.cpp							\
 		src/Class/Component/Output/LoggerComponent/LoggerComponent.cpp				\
+		src/Class/Component/Factory/Factory.cpp										\
 
 OBJ =   $(SRC:.cpp=.o)
 

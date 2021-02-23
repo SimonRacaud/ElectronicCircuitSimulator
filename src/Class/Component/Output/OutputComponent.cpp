@@ -9,6 +9,7 @@ OutputComponent::OutputComponent(Tristate state, IComponent &component)
 
 Tristate OutputComponent::compute(size_t pin)
 {
+	(void) pin;
 	return UNDEFINED;
 }
 
