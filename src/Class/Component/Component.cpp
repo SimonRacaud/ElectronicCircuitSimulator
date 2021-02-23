@@ -23,11 +23,16 @@ Component::Component(const std::string &name, ComponentType type)
 
 Component::~Component()
 {
-    std::unordered_map<size_t, Output *>::iterator it;
+    std::unordered_map<size_t, Output *>::iterator itOut;
+    std::unordered_map<size_t, Input *>::iterator itIn;
 
     while (this->_outputs.empty() == true) {
-        it = this->_outputs.erase(this->_outputs.begin());
-        delete &(*it);
+        itOut = this->_outputs.erase(this->_outputs.begin());
+        delete &(*itOut);
+    }
+    while (this->_inputs.empty() == true) {
+        itIn = this->_inputs.erase(this->_inputs.begin());
+        delete &(*itIn);
     }
 }
 
@@ -57,20 +62,25 @@ Tristate Component::compute(__attribute__((unused)) std::size_t pin)
     return UNDEFINED;
 }
 
+/*
+ * pin => output pin (this), otherPin => input Pin (other)
+ */
 void Component::setLink(
     std::size_t pin, IComponent &other, std::size_t otherPin)
 {
     Component &otherCom = dynamic_cast<Component &>(other);
     auto outPin = this->_outputs.find(pin);
     auto inPin = otherCom._inputs.find(otherPin);
-    if (inPin != otherCom._inputs.end() && inPin->second != this) {
+
+    if (inPin != otherCom._inputs.end()
+        && &inPin->second->getComponent() != this) {
         throw BusyPinException("Input Pin already used", "setLink");
     }
     if (outPin != this->_outputs.end()) {
         delete this->_outputs[pin];
     }
     this->_outputs[pin] = new Output(UNDEFINED, other);
-    otherCom._inputs[otherPin] = this;
+    otherCom._inputs[otherPin] = new Input(pin, *this);
 }
 
 void Component::dump() const
@@ -84,8 +94,10 @@ void Component::dump() const
               << std::endl;
     std::cout << "Inputs:" << std::endl;
     for (auto it = this->_inputs.begin(); it != this->_inputs.end(); it++) {
-        std::cout << "\t" << dynamic_cast<Component *>(it->second)->_name
-                  << std::endl;
+        std::cout
+            << "\t"
+            << dynamic_cast<Component *>(&it->second->getComponent())->_name
+            << std::endl;
     }
     std::cout << "Outputs:" << std::endl;
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {

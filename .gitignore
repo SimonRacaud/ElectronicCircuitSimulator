@@ -8,3 +8,4 @@ nanotekspice
 vgcore.*
 tmp*
 log.bin
+.vscode
