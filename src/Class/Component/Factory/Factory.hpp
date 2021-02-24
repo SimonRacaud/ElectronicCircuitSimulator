@@ -13,10 +13,13 @@ namespace nts
 	{
 		public:
 			FactoryComponent();
+			void setComponentName(std::string name);
+			std::unique_ptr<nts::IComponent> callFactory(const std::string &type, std::string name);
             std::unique_ptr<nts::IComponent> createComponent(const std::string &type);
 
 		private:
-			std::unordered_map <std::string, std::function<IComponent *(Tristate state, IComponent &component)>> _list;
+			std::unordered_map <std::string, std::function<IComponent *()>> _list;
+			std::string _componentName;
 	};
 }
 #endif

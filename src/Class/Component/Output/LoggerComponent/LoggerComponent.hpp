@@ -9,23 +9,14 @@ namespace nts
 	class LoggerComponent : public OutputComponent 
 	{
 		public:
-			LoggerComponent(Tristate state, IComponent &component);
+			LoggerComponent(const std::string &name);
 
-			Tristate getState() const;
-			IComponent &getComponent() const;
-
-			void setState(Tristate state);
-			void setComponent(IComponent &component);
             Tristate compute(size_t pin);
             void simulate(size_t time);
 
 		private:
 			bool correctParmasForWrite(void);
 			char charFromTristate(Tristate state);
-
-		private:
-			Tristate _state;
-			IComponent &_component;
 	};
 
 }

@@ -2,8 +2,8 @@
 
 using namespace nts;
 
-InputComponent::InputComponent(Tristate state, IComponent &component)
-    : _state(state), _component(component)
+InputComponent::InputComponent(const std::string &name)
+    : _state(UNDEFINED), _component(new Component(name, INPUT))
 {
 }
 
@@ -12,7 +12,7 @@ Tristate InputComponent::getState() const
 	return this->_state;
 }
 
-IComponent &InputComponent::getComponent() const
+IComponent *InputComponent::getComponent() const
 {
 	return this->_component;
 }
@@ -22,7 +22,7 @@ void InputComponent::setState(Tristate state)
 	this->_state = state;
 }
 
-void InputComponent::setComponent(IComponent &component)
+void InputComponent::setComponent(IComponent *component)
 {
 	this->_component = component;
 }

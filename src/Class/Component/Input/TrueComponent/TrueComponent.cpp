@@ -2,7 +2,7 @@
 
 using namespace nts;
 
-TrueComponent::TrueComponent(Tristate state, IComponent &component) : InputComponent(state, component)
+TrueComponent::TrueComponent(const std::string &name) : InputComponent(name)
 {
     this->setState(TRUE);
 }

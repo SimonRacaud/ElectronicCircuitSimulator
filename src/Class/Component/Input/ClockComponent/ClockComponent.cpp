@@ -2,7 +2,7 @@
 
 using namespace nts;
 
-ClockComponent::ClockComponent(Tristate state, IComponent &component) : InputComponent(state, component)
+ClockComponent::ClockComponent(const std::string &name) : InputComponent(name)
 {
     this->setState(TRUE);
 }

@@ -4,8 +4,8 @@
 
 using namespace nts;
 
-LoggerComponent::LoggerComponent(Tristate state, IComponent &component)
-    : OutputComponent(state, component), _state(state), _component(component)
+LoggerComponent::LoggerComponent(const std::string &name)
+    : OutputComponent(name)
 {
 }
 

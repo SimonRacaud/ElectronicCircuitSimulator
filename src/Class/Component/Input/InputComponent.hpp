@@ -9,20 +9,20 @@ namespace nts
 	class InputComponent : public Component 
 	{
 		public:
-			InputComponent(Tristate state, IComponent &component);
+			InputComponent(const std::string &name);
 
 			Tristate getState() const;
-			IComponent &getComponent() const;
+			IComponent *getComponent() const;
 
 			void setState(Tristate state);
-			void setComponent(IComponent &component);
+			void setComponent(IComponent *component);
             void setInputValue(Tristate state);
             Tristate compute(size_t pin);
             void simulate(size_t time);
 
 		private:
 			Tristate _state;
-			IComponent &_component;
+			IComponent *_component;
 	};
 
 }

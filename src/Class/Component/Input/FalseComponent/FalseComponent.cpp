@@ -2,7 +2,7 @@
 
 using namespace nts;
 
-FalseComponent::FalseComponent(Tristate state, IComponent &component) : InputComponent(state, component)
+FalseComponent::FalseComponent(const std::string &name) : InputComponent(name)
 {
     this->setState(FALSE);
 }

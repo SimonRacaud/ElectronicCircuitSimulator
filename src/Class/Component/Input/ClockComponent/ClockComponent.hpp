@@ -9,7 +9,7 @@ namespace nts
 	class ClockComponent : public InputComponent
 	{
 		public:
-			ClockComponent(Tristate state, IComponent &component);
+			ClockComponent(const std::string &name = "clock");
 
 			void simulate(size_t time);
             Tristate compute(size_t pin);

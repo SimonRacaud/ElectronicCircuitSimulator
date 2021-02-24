@@ -10,11 +10,22 @@ using namespace nts;
 FactoryComponent::FactoryComponent()
 {
     this->_list = {
-        {"clock", [](Tristate state, IComponent &component) {return new ClockComponent(state, component);}},
-        {"false", [](Tristate state, IComponent &component) {return new FalseComponent(state, component);}},
-        {"true", [](Tristate state, IComponent &component) {return new TrueComponent(state, component);}},
-        {"logger", [](Tristate state, IComponent &component) {return new LoggerComponent(state, component);}},
+        {"clock", [this]() {return new ClockComponent(this->_componentName);}},
+        {"false", [this]() {return new FalseComponent(this->_componentName);}},
+        {"true", [this]() {return new TrueComponent(this->_componentName);}},
+        {"logger", [this]() {return new LoggerComponent(this->_componentName);}},
     };
+}
+
+void FactoryComponent::setComponentName(std::string name)
+{
+    this->_componentName = name;
+}
+
+std::unique_ptr<nts::IComponent> FactoryComponent::callFactory(const std::string &type, std::string name)
+{
+    this->setComponentName(name);
+    return this->createComponent(type);
 }
 
 std::unique_ptr<IComponent> FactoryComponent::createComponent(const std::string &type)
@@ -23,7 +34,7 @@ std::unique_ptr<IComponent> FactoryComponent::createComponent(const std::string 
     IComponent *ret;
 
     if (this->_list.find(type) != this->_list.end()) {
-        ret = this->_list[type](UNDEFINED, *component);
+        ret = this->_list[type]();
     } else {
         throw ComponentTypeException("Can't find component " + type, "Factory");
     }

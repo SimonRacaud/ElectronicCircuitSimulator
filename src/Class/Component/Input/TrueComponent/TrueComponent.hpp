@@ -9,7 +9,7 @@ namespace nts
 	class TrueComponent : public InputComponent
 	{
 		public:
-			TrueComponent(Tristate state, IComponent &component);
+			TrueComponent(const std::string &name = "true");
 
 			void simulate(size_t time);
             Tristate compute(size_t pin);

@@ -2,8 +2,8 @@
 
 using namespace nts;
 
-OutputComponent::OutputComponent(Tristate state, IComponent &component)
-    : _state(state), _component(component)
+OutputComponent::OutputComponent(const std::string &name)
+	: _state(UNDEFINED), _component(new Component(name, INPUT))
 {
 }
 
