@@ -67,7 +67,8 @@ Tristate Component::getState(size_t pinOut)
 void Component::simulate(std::size_t tick)
 {
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        it->second->setState(this->compute(it->first));
+        it->second->setNewState(this->compute(it->first));
+        it->second->updateState();
     }
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
         it->second->getComponent().simulate(tick);
@@ -165,7 +166,7 @@ void Component::setState(Tristate state)
     } else {
         for (auto it = this->_outputs.begin(); it != this->_outputs.end();
              it++) {
-            it->second->setState(state);
+            it->second->setNewState(state);
         }
     }
 }

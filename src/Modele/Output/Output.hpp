@@ -15,10 +15,12 @@ namespace nts
         Tristate getState() const;
         IComponent &getComponent() const;
 
-        void setState(Tristate state);
+        void setNewState(Tristate state);
+        void updateState(void);
         void setComponent(IComponent &component);
 
       private:
+        Tristate _newState;
         Tristate _state;
         IComponent *_component;
     };
