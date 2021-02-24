@@ -3,39 +3,17 @@
 using namespace nts;
 
 InputComponent::InputComponent(const std::string &name)
-    : _state(UNDEFINED), _component(new Component(name, INPUT))
+    : Component(name)
 {
-}
+	size_t pin_out[] = {1};
 
-Tristate InputComponent::getState() const
-{
-	return this->_state;
-}
-
-IComponent *InputComponent::getComponent() const
-{
-	return this->_component;
-}
-
-void InputComponent::setState(Tristate state)
-{
-	this->_state = state;
-}
-
-void InputComponent::setComponent(IComponent *component)
-{
-	this->_component = component;
-}
-
-void InputComponent::setInputValue(Tristate state)
-{
-    this->setState(state);
+	this->createOutputs(pin_out, 1);
 }
 
 Tristate InputComponent::compute(size_t pin)
 {
 	(void) pin;
-	return this->getState();
+	return UNDEFINED;
 }
 
 void InputComponent::simulate(size_t time)

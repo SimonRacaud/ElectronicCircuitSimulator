@@ -2,11 +2,11 @@
 #define LOGGERCOMPONENT_H
 #pragma once
 
-#include "Class/Component/Output/OutputComponent.hpp"
+#include "Class/Component/Component.hpp"
 
 namespace nts
 {
-	class LoggerComponent : public OutputComponent 
+	class LoggerComponent : public Component 
 	{
 		public:
 			LoggerComponent(const std::string &name);

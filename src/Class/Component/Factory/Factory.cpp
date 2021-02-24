@@ -1,5 +1,7 @@
 #include <memory>
 #include "Factory.hpp"
+#include "Class/Component/Input/InputComponent.hpp"
+#include "Class/Component/Output/OutputComponent.hpp"
 #include "Class/Component/Input/TrueComponent/TrueComponent.hpp"
 #include "Class/Component/Input/FalseComponent/FalseComponent.hpp"
 #include "Class/Component/Input/ClockComponent/ClockComponent.hpp"
@@ -16,8 +18,8 @@ using namespace nts;
 FactoryComponent::FactoryComponent(std::string name) : _componentName(name)
 {
     this->_list = {
-        {"output", [this]() {return new Component(this->_componentName, OUTPUT);}},
-        {"input", [this]() {return new Component(this->_componentName, INPUT);}},
+        {"output", [this]() {return new OutputComponent(this->_componentName);}},
+        {"input", [this]() {return new InputComponent(this->_componentName);}},
         {"clock", [this]() {return new ClockComponent(this->_componentName);}},
         {"false", [this]() {return new FalseComponent(this->_componentName);}},
         {"true", [this]() {return new TrueComponent(this->_componentName);}},

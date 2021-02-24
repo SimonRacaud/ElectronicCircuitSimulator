@@ -15,8 +15,7 @@ void ClockComponent::simulate(size_t time)
 
 Tristate ClockComponent::compute(size_t pin)
 {
-    (void) pin;
-    Tristate pinValue = this->getState();
+    Tristate pinValue = this->getState(pin);
 
     pinValue = (pinValue == TRUE) ? FALSE : TRUE;
     this->setState(pinValue);
