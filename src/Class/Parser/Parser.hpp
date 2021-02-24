@@ -15,6 +15,7 @@
 #include <tuple>
 #include "Class/Circuit/Circuit.hpp"
 #include "Class/Exception/ParsingError.hpp"
+#include "Class/Component/Factory/Factory.hpp"
 
 #define TOKEN    ':'
 #define COMMENT  '#'
@@ -31,7 +32,10 @@ namespace nts
             const std::string &filepath, nts::Circuit &dest);
 
       private:
+        static void chipsetLoad(std::map<std::string, std::string> mapChipsets, Circuit &dest);
+        static void linkLoad(std::list<std::tuple<std::string, std::string, std::string, std::string>> mapLinks, Circuit &dest);
         static std::list<std::string> readFile(const std::string &filepath);
+        static bool emptyLine(std::string &str);
         static void cleanComment(std::list<std::string> &file);
         static std::map<std::string, std::string> cutAt(const char c,
             std::list<std::string>::iterator start,

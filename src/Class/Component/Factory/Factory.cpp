@@ -4,6 +4,7 @@
 #include "Class/Component/Input/FalseComponent/FalseComponent.hpp"
 #include "Class/Component/Input/ClockComponent/ClockComponent.hpp"
 #include "Class/Component/Output/LoggerComponent/LoggerComponent.hpp"
+#include "Class/Component/Other/4001/C4001.hpp"
 
 using namespace nts;
 

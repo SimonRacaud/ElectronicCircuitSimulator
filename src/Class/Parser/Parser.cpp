@@ -7,14 +7,25 @@
 
 #include "Parser.hpp"
 
-void nts::Parser::cleanComment(std::list<std::string> &file)
+using namespace nts;
+
+bool Parser::emptyLine(std::string &str)
+{
+    for (std::string::iterator it = str.begin(); it != str.end(); it++) {
+        if ((*it) != ' ')
+            return false;
+    }
+    return true;
+}
+
+void Parser::cleanComment(std::list<std::string> &file)
 {
     std::list<std::string>::iterator tmp;
     size_t found = 0;
 
     for (std::list<std::string>::iterator it = file.begin(); it != file.end();) {
         found = (*it).find(COMMENT);
-        if (found == 0 || (*it).length() == 0) {
+        if (found == 0 || Parser::emptyLine(*it)) {
             tmp = it;
             it++;
             file.erase(tmp);
@@ -27,7 +38,7 @@ void nts::Parser::cleanComment(std::list<std::string> &file)
     }
 }
 
-std::list<std::string> nts::Parser::readFile(const std::string &filepath)
+std::list<std::string> Parser::readFile(const std::string &filepath)
 {
     std::list<std::string> all_file;
     std::ifstream myfile(filepath);
@@ -40,13 +51,55 @@ std::list<std::string> nts::Parser::readFile(const std::string &filepath)
     } else {
         throw ParsingError("Parsing", "Can't open file");
     }
-    nts::Parser::cleanComment(all_file);
+    Parser::cleanComment(all_file);
     return all_file;
 }
 
-void nts::Parser::parsingFile(const std::string &filepath, nts::Circuit &dest)
+void Parser::chipsetLoad(std::map<std::string, std::string> mapChipsets, Circuit &dest)
 {
-    std::list<std::string> file = nts::Parser::readFile(filepath);
+    FactoryComponent *factory = new FactoryComponent();
+    IComponent *node = nullptr;
+    std::unique_ptr<nts::IComponent> tmp;
+
+    for (const auto& it : mapChipsets) {
+        std::cout << it.first << " = " << it.second << ";" << std::endl;
+        node = nullptr;
+        if (it.second == "input") {
+            node = new Component(it.first, INPUT);
+        } else if (it.second == "output") {
+            node = new Component(it.first, OUTPUT);
+        } else {
+            tmp = factory->createComponent(it.second);
+            node = tmp.release();
+        }
+        dest.addNode(*node);
+    }
+    delete factory;
+}
+
+void Parser::linkLoad(std::list<std::tuple<std::string, std::string, std::string, std::string>> mapLinks, Circuit &dest)
+{
+    size_t pinFirst = 0;
+    size_t pinSec = 0;
+
+    for (const auto& it : mapLinks) {
+        std::cout << std::get<0>(it) << "|" << std::get<1>(it) << "|" << std::get<2>(it) << "|" << std::get<3>(it) << "|" << std::endl;
+        try {
+            pinFirst = std::stoi(std::get<1>(it).c_str());
+            pinSec = std::stoi(std::get<3>(it).c_str());
+        } catch (std::invalid_argument const &e) {
+            throw ParsingError("Parsing", "is not alphanum");
+        } catch (std::out_of_range const &e) {
+            throw ParsingError("Parsing", "is too big");
+        }
+        dest.setNodeLink(std::get<0>(it), pinFirst, std::get<2>(it), pinSec);
+        //std::cout << pinFirst << ", " << pinSec << std::endl;
+    }
+}
+
+void Parser::parsingFile(const std::string &filepath, Circuit &dest)
+{
+    std::list<std::string> file = Parser::readFile(filepath);
     std::list<std::string>::iterator links = std::find_if(file.begin(), file.end(), [&](std::string str){ return str == LINKS;});
     std::list<std::string>::iterator chipsets = std::find_if(file.begin(),
     file.end(), [&](std::string str){ return str == CHIPSETS;});
@@ -54,23 +107,16 @@ void nts::Parser::parsingFile(const std::string &filepath, nts::Circuit &dest)
     if (links == file.end() || chipsets == file.end())
         throw ParsingError("Parsing", "Wrong format");
     chipsets++;
-    std::map<std::string, std::string> mapChipsets = nts::Parser::cutAt(' ', chipsets, links);
+    std::map<std::string, std::string> mapChipsets = Parser::cutAt(' ', chipsets, links);
     links++;
-    std::map<std::string, std::string> mapLinks = nts::Parser::cutAt(' ', links, file.end());
-    std::list<std::tuple<std::string, std::string, std::string, std::string>> allLinks = nts::Parser::cleanLink(mapLinks, mapChipsets);
-    /*for (const auto& m : mapChipsets) {
-        std::cout << m.first << " = " << m.second << ";" << std::endl;
-    }
-    for (const auto& m : mapLinks) {
-        std::cout << m.first << " = " << m.second << ";" << std::endl;
-    }
-    for (const auto& m : allLinks) {
-        std::cout << std::get<0>(m) << "|" << std::get<1>(m) << "|" << std::get<2>(m) << "|" << std::get<3>(m) << "|" << std::endl;
-    }
-    std::cout << mapChipsets.size() << "|" << mapLinks.size() << std::endl;*/
+    std::map<std::string, std::string> mapLinks = Parser::cutAt(' ', links, file.end());
+    std::list<std::tuple<std::string, std::string, std::string, std::string>> allLinks = Parser::cleanLink(mapLinks, mapChipsets);
+
+    Parser::chipsetLoad(mapChipsets, dest);
+    Parser::linkLoad(allLinks, dest);
 }
 
-std::map<std::string, std::string> nts::Parser::cutAt(const char c, std::list<std::string>::iterator start, std::list<std::string>::iterator end)
+std::map<std::string, std::string> Parser::cutAt(const char c, std::list<std::string>::iterator start, std::list<std::string>::iterator end)
 {
     size_t found;
     std::map<std::string, std::string> map;
@@ -86,7 +132,7 @@ std::map<std::string, std::string> nts::Parser::cutAt(const char c, std::list<st
     return map;
 }
 
-std::list<std::tuple<std::string, std::string, std::string, std::string>> nts::Parser::cleanLink(
+std::list<std::tuple<std::string, std::string, std::string, std::string>> Parser::cleanLink(
     std::map<std::string, std::string> mapLinks,
     std::map<std::string, std::string> mapChipsets
 )
