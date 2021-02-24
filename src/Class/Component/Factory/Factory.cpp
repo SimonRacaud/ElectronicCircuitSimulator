@@ -30,7 +30,6 @@ std::unique_ptr<nts::IComponent> FactoryComponent::callFactory(const std::string
 
 std::unique_ptr<IComponent> FactoryComponent::createComponent(const std::string &type)
 {
-    IComponent *component = new Component();
     IComponent *ret;
 
     if (this->_list.find(type) != this->_list.end()) {

@@ -30,8 +30,12 @@ SRC_COMPONENT = /Component.cpp											\
 				/Input/FalseComponent/FalseComponent.cpp				\
 				/Input/TrueComponent/TrueComponent.cpp					\
 				/Output/LoggerComponent/LoggerComponent.cpp				\
-				/Other/4001/C4001.cpp									\
-				#/Factory/Factory.cpp									\
+				/Factory/Factory.cpp									\
+				/Other/4011/C4011.cpp									\
+				/Other/4030/C4030.cpp									\
+				/Other/4069/C4069.cpp									\
+				/Other/4071/C4071.cpp									\
+				/Other/4081/C4081.cpp									\
 
 OBJ =   $(SRC:.cpp=.o)
 
