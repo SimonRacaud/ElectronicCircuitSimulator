@@ -32,6 +32,8 @@ namespace nts
             const std::string &filepath, nts::Circuit &dest);
 
       private:
+        static bool getSens(std::list<std::string>::iterator links, std::list<std::string>::iterator end);
+        static void cleanLine(std::string &str);
         static void chipsetLoad(std::map<std::string, std::string> mapChipsets, Circuit &dest);
         static void linkLoad(std::list<std::tuple<std::string, std::string, std::string, std::string>> mapLinks, std::map<std::string, std::string> mapChipsets, Circuit &dest);
         static std::list<std::string> readFile(const std::string &filepath);

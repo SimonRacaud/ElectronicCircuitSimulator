@@ -22,6 +22,7 @@ int main(int ac, char **av)
             nts::Parser::parsingFile(av[1], *circ);
         } catch (const ParsingError &e) {
             std::cerr << e.what() << ": " << e.getComponent() << std::endl;
+            return 84;
         }
         cl.setCircuit(circ);
         cl.loop();
