@@ -3,8 +3,11 @@
 using namespace nts;
 
 OutputComponent::OutputComponent(const std::string &name)
-	: _state(UNDEFINED), _component(new Component(name, INPUT))
+	: Component(name, OUTPUT)
 {
+	size_t pin_in[] = {1};
+
+	this->createInputs(pin_in, 1);
 }
 
 Tristate OutputComponent::compute(size_t pin)

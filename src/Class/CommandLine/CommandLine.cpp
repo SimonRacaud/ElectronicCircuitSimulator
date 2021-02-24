@@ -81,16 +81,15 @@ void CommandLine::exitCmd()
 
 void CommandLine::displayCmd()
 {
-    std::deque<ComponentContent *> content;
-
     if (this->_circuit) {
         std::cout << "tick: " << this->_circuit->getTick() << std::endl;
-        content = this->_circuit->getContent();
+        std::deque<ComponentContent *> &content = this->_circuit->getContent();
         this->_displayCmdInOut(ComponentType::INPUT, content);
         this->_displayCmdInOut(ComponentType::OUTPUT, content);
         while (content.empty() == false) {
-            delete *(content.erase(content.begin()));
+            content.erase(content.begin());
         }
+        delete &content;
     } else {
         std::cerr << this->_ERR_NO_CIRCUIT << std::endl;
     }
@@ -210,4 +209,9 @@ void CommandLine::editValueCmd()
 
 void CommandLine::_exceptionHandler()
 {
+}
+
+void CommandLine::setCircuit(Circuit *circuit)
+{
+    this->_circuit = circuit;
 }

@@ -33,7 +33,7 @@ namespace nts
 
       private:
         static void chipsetLoad(std::map<std::string, std::string> mapChipsets, Circuit &dest);
-        static void linkLoad(std::list<std::tuple<std::string, std::string, std::string, std::string>> mapLinks, Circuit &dest);
+        static void linkLoad(std::list<std::tuple<std::string, std::string, std::string, std::string>> mapLinks, std::map<std::string, std::string> mapChipsets, Circuit &dest);
         static std::list<std::string> readFile(const std::string &filepath);
         static bool emptyLine(std::string &str);
         static void cleanComment(std::list<std::string> &file);

@@ -62,6 +62,7 @@ void Parser::chipsetLoad(std::map<std::string, std::string> mapChipsets, Circuit
     std::unique_ptr<nts::IComponent> tmp;
 
     for (const auto& it : mapChipsets) {
+        //std::cout << it.second << ", " << it.first << std::endl;
         tmp = factory->callFactory(it.second, it.first);
         node = tmp.release();
         dest.addNode(*node);
@@ -69,13 +70,13 @@ void Parser::chipsetLoad(std::map<std::string, std::string> mapChipsets, Circuit
     delete factory;
 }
 
-void Parser::linkLoad(std::list<std::tuple<std::string, std::string, std::string, std::string>> mapLinks, Circuit &dest)
+void Parser::linkLoad(std::list<std::tuple<std::string, std::string, std::string, std::string>> mapLinks, std::map<std::string, std::string> mapChipsets, Circuit &dest)
 {
     size_t pinFirst = 0;
     size_t pinSec = 0;
 
     for (const auto& it : mapLinks) {
-        std::cout << std::get<0>(it) << "|" << std::get<1>(it) << "|" << std::get<2>(it) << "|" << std::get<3>(it) << "|" << std::endl;
+        //std::cout << std::get<0>(it) << "|" << std::get<1>(it) << "|" << std::get<2>(it) << "|" << std::get<3>(it) << "|" << std::endl;
         try {
             pinFirst = std::stoi(std::get<1>(it).c_str());
             pinSec = std::stoi(std::get<3>(it).c_str());
@@ -84,7 +85,10 @@ void Parser::linkLoad(std::list<std::tuple<std::string, std::string, std::string
         } catch (std::out_of_range const &e) {
             throw ParsingError("Parsing", "is too big");
         }
-        dest.setNodeLink(std::get<0>(it), pinFirst, std::get<2>(it), pinSec);
+        if (mapChipsets[std::get<0>(it)] == "input")
+            dest.setNodeLink(std::get<0>(it), pinFirst, std::get<2>(it), pinSec);
+        else
+            dest.setNodeLink(std::get<2>(it), pinSec, std::get<0>(it), pinFirst);
     }
 }
 
@@ -104,7 +108,7 @@ void Parser::parsingFile(const std::string &filepath, Circuit &dest)
     std::list<std::tuple<std::string, std::string, std::string, std::string>> allLinks = Parser::cleanLink(mapLinks, mapChipsets);
 
     Parser::chipsetLoad(mapChipsets, dest);
-    Parser::linkLoad(allLinks, dest);
+    Parser::linkLoad(allLinks, mapChipsets, dest);
 }
 
 std::map<std::string, std::string> Parser::cutAt(const char c, std::list<std::string>::iterator start, std::list<std::string>::iterator end)

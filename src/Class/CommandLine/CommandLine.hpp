@@ -38,7 +38,7 @@ namespace nts
         ~CommandLine();
 
         void loop();
-
+        void setCircuit(Circuit *circuit);
         void setLoopCmdLoop(bool status);
 
       protected:

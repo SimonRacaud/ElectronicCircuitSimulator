@@ -7,6 +7,10 @@ ComponentContent::ComponentContent(const std::string &name, ComponentType type, 
 {
 }
 
+ComponentContent::~ComponentContent()
+{
+}
+
 const std::string &ComponentContent::getName() const
 {
 	return this->_name;

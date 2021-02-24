@@ -5,8 +5,11 @@
 using namespace nts;
 
 LoggerComponent::LoggerComponent(const std::string &name)
-    : OutputComponent(name)
+    : Component(name, OUTPUT)
 {
+	size_t pin_in[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+	this->createInputs(pin_in, 10);
 }
 
 /*
