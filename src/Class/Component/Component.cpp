@@ -102,21 +102,28 @@ void Component::dump() const
     std::unordered_map<Tristate, std::string> stateNames = {
         {UNDEFINED, "UNDEFINED"}, {TRUE, "TRUE"}, {FALSE, "FALSE"}};
     std::string name;
+    Component *tmp;
 
     std::cout << "Component: " << _name << " " << typeNames[_type]
               << std::endl;
     std::cout << "Inputs:" << std::endl;
     for (auto it = this->_inputs.begin(); it != this->_inputs.end(); it++) {
-        std::cout
-            << "\t"
-            << dynamic_cast<Component *>(&it->second->getComponent())->_name
-            << std::endl;
+        tmp = dynamic_cast<Component *>(&it->second->getComponent());
+        if (tmp) {
+            std::cout
+                << "\t"
+                << tmp->_name
+                << std::endl;
+        }
     }
     std::cout << "Outputs:" << std::endl;
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        name = dynamic_cast<Component *>(&it->second->getComponent())->_name;
-        std::cout << "\t" << name << ": " << stateNames[it->second->getState()]
-                  << std::endl;
+        tmp = dynamic_cast<Component *>(&it->second->getComponent());
+        if (tmp) {
+            name = tmp->_name;
+            std::cout << "\t" << name << ": " << stateNames[it->second->getState()]
+                    << std::endl;
+        }
     }
     std::cout << std::endl;
 }
