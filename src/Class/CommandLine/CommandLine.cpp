@@ -21,6 +21,7 @@ std::unordered_map<std::string, cmdFunc> CommandLine::CMD = {
     {"loop", &CommandLine::loopCmd},
     {"dump", &CommandLine::dumpCmd},
     {"help", &CommandLine::helpCmd},
+    {"h", &CommandLine::helpCmd},
     {"input=value", &CommandLine::editValueCmd},
 };
 
@@ -32,7 +33,7 @@ std::unordered_map<std::string, std::string> CommandLine::CMD_DESC = {
     {"simulate", "simulate a tick of the circuit."},
     {"loop", "continiously runs the simulation until SIGINT is received."},
     {"dump", "display de internal state of all components of the circuit."},
-    {"help", "usage."},
+    {"help/h", "usage."},
     {"input=value", "set the output state of an input component."},
 };
 
