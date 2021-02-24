@@ -48,11 +48,12 @@ void Parser::cleanComment(std::list<std::string> &file)
             file.erase(tmp);
         } else if (found != std::string::npos) {
             (*it).erase(found, (*it).length() - found);
+            Parser::cleanLine(*it);
             it++;
         } else {
+            Parser::cleanLine(*it);
             it++;
         }
-        Parser::cleanLine(*it);
     }
 }
 
