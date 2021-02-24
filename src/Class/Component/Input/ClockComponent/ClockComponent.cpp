@@ -10,6 +10,7 @@ ClockComponent::ClockComponent(const std::string &name) : InputComponent(name)
 void ClockComponent::simulate(size_t time)
 {
     InputComponent::simulate(time);
+    this->compute(1);
     return;
 }
 
