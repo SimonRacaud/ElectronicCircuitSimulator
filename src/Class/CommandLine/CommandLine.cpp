@@ -56,9 +56,9 @@ void CommandLine::loop()
         if (!std::getline(std::cin, input))
             break;
         if (CommandLine::CMD.find(input) != CommandLine::CMD.end()) {
-            this->_lastInput = input;
             CALL_MEMBER_FN((*this), CommandLine::CMD[input])();
         } else if (input.size() > 0) {
+            this->_lastInput = input;
             CALL_MEMBER_FN((*this), CommandLine::CMD["input=value"])();
         }
     }
@@ -98,7 +98,7 @@ void CommandLine::displayCmd()
 void CommandLine::_displayCmdInOut(
     ComponentType type, std::deque<ComponentContent *> &content)
 {
-    std::unordered_map<size_t, Tristate> outputs;
+    std::unordered_map<size_t, Tristate> pins;
 
     if (type == ComponentType::INPUT)
         std::cout << "input(s):" << std::endl;
@@ -106,12 +106,14 @@ void CommandLine::_displayCmdInOut(
         std::cout << "output(s):" << std::endl;
     for (ComponentContent *cc : content) {
         if (cc && cc->getType() == type) {
-            outputs = cc->getOutputs();
-            if (outputs.size() > 0) {
-                std::cout << "  " << cc->getName() << ": " << outputs[0]
+            pins = cc->getPins();
+            if (pins.size() > 0) {
+                std::cout << "  " << cc->getName() << ": "
+                          << Component::TRISTATE_STR[(pins.begin())->second]
                           << std::endl;
             } else {
-                std::cout << "  " << cc->getName() << ": " << std::endl;
+                throw ManageError(
+                    "Display error, no pin to display", "Component::display");
             }
         }
     }
@@ -189,7 +191,7 @@ void CommandLine::editValueCmd()
 
     if (this->_circuit) {
         if (!std::regex_match(
-                this->_lastInput, std::regex("^[a-z]+=[01U]$"))) {
+                this->_lastInput, std::regex("^[a-z_0-9]+=[01U]$"))) {
             std::cerr << "Error: invalid input format" << std::endl;
             return;
         }
