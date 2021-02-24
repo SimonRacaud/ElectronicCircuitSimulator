@@ -62,16 +62,8 @@ void Parser::chipsetLoad(std::map<std::string, std::string> mapChipsets, Circuit
     std::unique_ptr<nts::IComponent> tmp;
 
     for (const auto& it : mapChipsets) {
-        std::cout << it.first << " = " << it.second << ";" << std::endl;
-        node = nullptr;
-        if (it.second == "input") {
-            node = new Component(it.first, INPUT);
-        } else if (it.second == "output") {
-            node = new Component(it.first, OUTPUT);
-        } else {
-            tmp = factory->createComponent(it.second);
-            node = tmp.release();
-        }
+        tmp = factory->callFactory(it.second, it.first);
+        node = tmp.release();
         dest.addNode(*node);
     }
     delete factory;
@@ -93,7 +85,6 @@ void Parser::linkLoad(std::list<std::tuple<std::string, std::string, std::string
             throw ParsingError("Parsing", "is too big");
         }
         dest.setNodeLink(std::get<0>(it), pinFirst, std::get<2>(it), pinSec);
-        //std::cout << pinFirst << ", " << pinSec << std::endl;
     }
 }
 
@@ -156,7 +147,7 @@ std::list<std::tuple<std::string, std::string, std::string, std::string>> Parser
         four = (m.second).substr(found_two + 1, (m.second).length());
         if (mapChipsets.find(one) == mapChipsets.end() || mapChipsets.find(three) == mapChipsets.end())
             throw ParsingError("Parsing", "Undifined variable");
-        tuple.push_back(make_tuple(one, two, three, four));
+        tuple.push_back(make_tuple(three, four, one, two));
     }
     return tuple;
 }

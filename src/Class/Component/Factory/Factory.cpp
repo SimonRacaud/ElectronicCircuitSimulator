@@ -16,6 +16,8 @@ using namespace nts;
 FactoryComponent::FactoryComponent(std::string name) : _componentName(name)
 {
     this->_list = {
+        {"output", [this]() {return new Component(this->_componentName, OUTPUT);}},
+        {"input", [this]() {return new Component(this->_componentName, INPUT);}},
         {"clock", [this]() {return new ClockComponent(this->_componentName);}},
         {"false", [this]() {return new FalseComponent(this->_componentName);}},
         {"true", [this]() {return new TrueComponent(this->_componentName);}},
