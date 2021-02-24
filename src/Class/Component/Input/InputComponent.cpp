@@ -16,8 +16,10 @@ Tristate InputComponent::compute(size_t pin)
     return UNDEFINED;
 }
 
-void InputComponent::simulate(size_t time)
+void InputComponent::simulate(size_t tick)
 {
-    (void) time;
     this->_outputs[1]->updateState();
+    for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
+        it->second->getComponent().simulate(tick);
+    }
 }

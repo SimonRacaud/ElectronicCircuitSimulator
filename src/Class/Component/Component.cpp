@@ -77,6 +77,7 @@ void Component::simulate(std::size_t tick)
 
 Tristate Component::compute(__attribute__((unused)) std::size_t pin)
 {
+    throw std::exception();
     return UNDEFINED;
 }
 
@@ -115,7 +116,8 @@ void Component::dump() const
     for (auto it = this->_inputs.begin(); it != this->_inputs.end(); it++) {
         tmp = dynamic_cast<Component *>(&it->second->getComponent());
         if (tmp) {
-            std::cout << "\t" << tmp->_name << std::endl;
+            std::cout << "\t" << tmp->_name << " : "
+                      << stateNames[it->second->getState()] << std::endl;
         }
     }
     std::cout << "Outputs:" << std::endl;
