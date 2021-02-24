@@ -3,7 +3,7 @@
 using namespace nts;
 
 InputComponent::InputComponent(const std::string &name)
-    : Component(name)
+    : Component(name, INPUT)
 {
 	size_t pin_out[] = {1};
 
