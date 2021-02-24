@@ -24,7 +24,7 @@ namespace nts
     {
         public:
             ComponentContent(const std::string &name, ComponentType type, std::unordered_map<size_t, Tristate> &outputs);
-            ~ComponentContent() = default;
+            ~ComponentContent();
 
             const std::string &getName() const;
             ComponentType getType() const;

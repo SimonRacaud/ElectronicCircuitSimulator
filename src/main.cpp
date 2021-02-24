@@ -23,9 +23,8 @@ int main(int ac, char **av)
         } catch (const ParsingError &e) {
             std::cerr << e.what() << ": " << e.getComponent() << std::endl;
         }
-        //circ->dump();
         cl.setCircuit(circ);
         cl.loop();
     }
-    //delete circ;
+    delete circ;
 }
