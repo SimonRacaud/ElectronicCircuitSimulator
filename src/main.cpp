@@ -14,16 +14,18 @@
 
 int main(int ac, char **av)
 {
-    /*nts::CommandLine cl;
-
-    cl.loop();*/
+    nts::CommandLine cl;
+    nts::Circuit *circ = new nts::Circuit;
 
     if (ac == 2) {
         try {
-            nts::Circuit *circ = new nts::Circuit;
             nts::Parser::parsingFile(av[1], *circ);
         } catch (const ParsingError &e) {
             std::cerr << e.what() << ": " << e.getComponent() << std::endl;
         }
+        //circ->dump();
+        cl.setCircuit(circ);
+        cl.loop();
     }
+    //delete circ;
 }

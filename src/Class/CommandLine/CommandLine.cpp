@@ -210,3 +210,8 @@ void CommandLine::editValueCmd()
 void CommandLine::_exceptionHandler()
 {
 }
+
+void CommandLine::setCircuit(Circuit *circuit)
+{
+    this->_circuit = circuit;
+}
