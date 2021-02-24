@@ -104,10 +104,10 @@ void Parser::linkLoad(std::list<std::tuple<std::string, std::string, std::string
         } catch (std::out_of_range const &e) {
             throw ParsingError("Parsing", "is too big");
         }
-        if (mapChipsets[std::get<0>(it)] == "input")
-            dest.setNodeLink(std::get<0>(it), pinFirst, std::get<2>(it), pinSec);
-        else
+        if (mapChipsets[std::get<0>(it)] == "output")
             dest.setNodeLink(std::get<2>(it), pinSec, std::get<0>(it), pinFirst);
+        else
+            dest.setNodeLink(std::get<0>(it), pinFirst, std::get<2>(it), pinSec);
     }
 }
 
