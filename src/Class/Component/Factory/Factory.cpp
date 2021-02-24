@@ -5,16 +5,27 @@
 #include "Class/Component/Input/ClockComponent/ClockComponent.hpp"
 #include "Class/Component/Output/LoggerComponent/LoggerComponent.hpp"
 #include "Class/Component/Other/4001/C4001.hpp"
+#include "Class/Component/Other/4030/C4030.hpp"
+#include "Class/Component/Other/4011/C4011.hpp"
+#include "Class/Component/Other/4069/C4069.hpp"
+#include "Class/Component/Other/4071/C4071.hpp"
+#include "Class/Component/Other/4081/C4081.hpp"
 
 using namespace nts;
 
-FactoryComponent::FactoryComponent()
+FactoryComponent::FactoryComponent(std::string name) : _componentName(name)
 {
     this->_list = {
         {"clock", [this]() {return new ClockComponent(this->_componentName);}},
         {"false", [this]() {return new FalseComponent(this->_componentName);}},
         {"true", [this]() {return new TrueComponent(this->_componentName);}},
         {"logger", [this]() {return new LoggerComponent(this->_componentName);}},
+        {"4001", [this]() {return new C4001(this->_componentName);}},
+        {"4011", [this]() {return new C4011(this->_componentName);}},
+        {"4030", [this]() {return new C4030(this->_componentName);}},
+        {"4069", [this]() {return new C4069(this->_componentName);}},
+        {"4071", [this]() {return new C4071(this->_componentName);}},
+        {"4081", [this]() {return new C4081(this->_componentName);}},
     };
 }
 

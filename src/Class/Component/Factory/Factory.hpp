@@ -12,7 +12,7 @@ namespace nts
 	class FactoryComponent
 	{
 		public:
-			FactoryComponent();
+			FactoryComponent(std::string name = "");
 			void setComponentName(std::string name);
 			std::unique_ptr<nts::IComponent> callFactory(const std::string &type, std::string name);
             std::unique_ptr<nts::IComponent> createComponent(const std::string &type);
