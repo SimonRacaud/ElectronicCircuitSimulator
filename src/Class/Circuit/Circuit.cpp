@@ -83,9 +83,12 @@ size_t Circuit::getTick() const
 void Circuit::setInputComponentValue(
     const std::string &compName, Tristate value)
 {
+    Component *comp;
+
     if (this->_nodes.find(compName) == this->_nodes.end()) {
         throw InvalidComponentNameException(
             "component not found", "circuit::setInputComponentValue");
     }
-    dynamic_cast<Component *>(this->_nodes[compName])->setState(value);
+    comp = dynamic_cast<Component *>(this->_nodes[compName]);
+    comp->setState(value);
 }

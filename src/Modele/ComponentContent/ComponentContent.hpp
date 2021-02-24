@@ -14,27 +14,27 @@
 #define H_COMPONENT_CONTENT
 
 #include <string>
-#include <unordered_map>
 #include "ComponentType.hpp"
 #include "IComponent.hpp"
+#include <unordered_map>
 
-namespace nts 
+namespace nts
 {
-    class ComponentContent
-    {
-        public:
-            ComponentContent(const std::string &name, ComponentType type, std::unordered_map<size_t, Tristate> &outputs);
-            ~ComponentContent();
+    class ComponentContent {
+      public:
+        ComponentContent(const std::string &name, ComponentType type,
+            std::unordered_map<size_t, Tristate> &outputs);
+        ~ComponentContent();
 
-            const std::string &getName() const;
-            ComponentType getType() const;
-            const std::unordered_map<size_t, Tristate> &getOutputs() const;
+        const std::string &getName() const;
+        ComponentType getType() const;
+        const std::unordered_map<size_t, Tristate> &getPins() const;
 
-        private:
-            std::string _name;
-            ComponentType _type;
-            std::unordered_map<size_t, Tristate> _outputs;
+      private:
+        std::string _name;
+        ComponentType _type;
+        std::unordered_map<size_t, Tristate> _pins;
     };
-}
+} // namespace nts
 
 #endif // DEBUG

@@ -16,6 +16,9 @@
 
 using namespace nts;
 
+std::unordered_map<Tristate, std::string> Component::TRISTATE_STR = {
+    {UNDEFINED, "U"}, {TRUE, "1"}, {FALSE, "0"}};
+
 Component::Component(const std::string &name, ComponentType type)
     : _name(name), _type(type)
 {
@@ -64,7 +67,8 @@ Tristate Component::getState(size_t pinOut)
 void Component::simulate(std::size_t tick)
 {
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        it->second->setState(this->compute(it->first));
+        it->second->setNewState(this->compute(it->first));
+        it->second->updateState();
     }
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
         it->second->getComponent().simulate(tick);
@@ -104,16 +108,14 @@ void Component::dump() const
     std::string name;
     Component *tmp;
 
+    std::cout << "-------------------------------------" << std::endl;
     std::cout << "Component: " << _name << " " << typeNames[_type]
               << std::endl;
     std::cout << "Inputs:" << std::endl;
     for (auto it = this->_inputs.begin(); it != this->_inputs.end(); it++) {
         tmp = dynamic_cast<Component *>(&it->second->getComponent());
         if (tmp) {
-            std::cout
-                << "\t"
-                << tmp->_name
-                << std::endl;
+            std::cout << "\t" << tmp->_name << std::endl;
         }
     }
     std::cout << "Outputs:" << std::endl;
@@ -121,8 +123,8 @@ void Component::dump() const
         tmp = dynamic_cast<Component *>(&it->second->getComponent());
         if (tmp) {
             name = tmp->_name;
-            std::cout << "\t" << name << ": " << stateNames[it->second->getState()]
-                    << std::endl;
+            std::cout << "\t" << name << ": "
+                      << stateNames[it->second->getState()] << std::endl;
         }
     }
     std::cout << std::endl;
@@ -130,12 +132,20 @@ void Component::dump() const
 
 ComponentContent &Component::getContent() const
 {
-    std::unordered_map<size_t, Tristate> outputs;
+    std::unordered_map<size_t, Tristate> pinsState;
 
-    for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        outputs[it->first] = it->second->getState();
+    if (this->_type == INPUT) {
+        for (auto it = this->_outputs.begin(); it != this->_outputs.end();
+             it++) {
+            pinsState[it->first] = it->second->getState();
+        }
+    } else if (this->_type == OUTPUT) {
+        for (auto it = this->_inputs.begin(); it != this->_inputs.end();
+             it++) {
+            pinsState[it->first] = it->second->getState();
+        }
     }
-    return *(new ComponentContent(_name, _type, outputs));
+    return *(new ComponentContent(_name, _type, pinsState));
 }
 
 const std::string &Component::getName() const
@@ -148,12 +158,15 @@ ComponentType Component::getType() const
     return this->_type;
 }
 
-void Component::setState(__attribute__((unused)) Tristate state)
+void Component::setState(Tristate state)
 {
-    throw ComponentTypeException(
-        "set state not supported", "component::setState");
-    ///// <<<< to define in sub components that support the feature
-    // for (auto it = this->_outputs.begin(); it != this->_outputs; it++) {
-    //     it->second->setState(state);
-    // }
+    if (this->_type != INPUT) {
+        throw ComponentTypeException(
+            "set state not supported", "component::setState");
+    } else {
+        for (auto it = this->_outputs.begin(); it != this->_outputs.end();
+             it++) {
+            it->second->setNewState(state);
+        }
+    }
 }

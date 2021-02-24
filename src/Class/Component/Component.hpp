@@ -48,6 +48,8 @@ namespace nts
         ComponentType getType() const;
 
         void setState(Tristate state);
+
+        static std::unordered_map<Tristate, std::string> TRISTATE_STR;
     };
 } // namespace nts
 

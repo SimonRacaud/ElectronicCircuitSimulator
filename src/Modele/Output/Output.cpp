@@ -14,7 +14,7 @@
 
 using namespace nts;
 
-Output::Output() : _state(UNDEFINED), _component(nullptr)
+Output::Output() : _newState(UNDEFINED), _state(UNDEFINED), _component(nullptr)
 {
 }
 
@@ -34,9 +34,14 @@ IComponent &Output::getComponent() const
     return *_component;
 }
 
-void Output::setState(Tristate state)
+void Output::setNewState(Tristate state)
 {
-    this->_state = state;
+    this->_newState = state;
+}
+
+void Output::updateState(void)
+{
+    this->_state = this->_newState;
 }
 
 void Output::setComponent(IComponent &component)

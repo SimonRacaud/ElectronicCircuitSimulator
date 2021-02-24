@@ -16,6 +16,7 @@
 #include "Class/Circuit/Circuit.hpp"
 #include "Class/Parser/Parser.hpp"
 #include "ComponentType.hpp"
+#include "Error/Error.hpp"
 
 #include <algorithm>
 #include <csignal>
