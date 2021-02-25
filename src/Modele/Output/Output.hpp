@@ -2,7 +2,10 @@
 #define OUTPUT_H
 #pragma once
 
+#include <algorithm>
+#include <deque>
 #include "IComponent.hpp"
+#include "InvalidLinkException.hpp"
 
 namespace nts
 {
@@ -10,19 +13,17 @@ namespace nts
       public:
         Output();
 
-        void initialize(Tristate state, IComponent &component);
-
         Tristate getState() const;
-        IComponent *getComponent() const;
+        std::deque<IComponent *> const &getComponents() const;
 
         void setNewState(Tristate state);
         void updateState(void);
-        void setComponent(IComponent &component);
+        void addComponent(IComponent &component);
 
       private:
         Tristate _newState;
         Tristate _state;
-        IComponent *_component;
+        std::deque<IComponent *> _components;
     };
 
 } // namespace nts
