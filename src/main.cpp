@@ -23,6 +23,9 @@ int main(int ac, char **av)
         } catch (const ParsingError &e) {
             std::cerr << e.what() << ": " << e.getComponent() << std::endl;
             return 84;
+        } catch (const ComponentTypeException &e) {
+            std::cerr << e.what() << ": " << e.getComponent() << std::endl;
+            return 84;
         }
         cl.setCircuit(circ);
         cl.loop();
