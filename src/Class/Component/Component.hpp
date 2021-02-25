@@ -15,6 +15,8 @@
 #include "Modele/Input/Input.hpp"
 #include "Modele/Output/Output.hpp"
 
+#include <algorithm>
+#include <deque>
 #include <string>
 #include <unordered_map>
 
@@ -28,6 +30,8 @@ namespace nts
         ComponentType _type;
         std::unordered_map<size_t, Input *> _inputs;
         std::unordered_map<size_t, Output *> _outputs;
+
+        void simulateNextNodes(size_t tick);
 
       public:
         Component(const std::string &name = "", ComponentType type = OTHER);

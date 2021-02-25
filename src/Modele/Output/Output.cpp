@@ -14,14 +14,8 @@
 
 using namespace nts;
 
-Output::Output() : _newState(UNDEFINED), _state(UNDEFINED), _component(nullptr)
+Output::Output() : _newState(UNDEFINED), _state(UNDEFINED)
 {
-}
-
-void Output::initialize(Tristate state, IComponent &component)
-{
-    _state = state;
-    _component = &component;
 }
 
 Tristate Output::getState() const
@@ -29,9 +23,9 @@ Tristate Output::getState() const
     return _state;
 }
 
-IComponent *Output::getComponent() const
+std::deque<IComponent *> const &Output::getComponents() const
 {
-    return _component;
+    return _components;
 }
 
 void Output::setNewState(Tristate state)
@@ -44,7 +38,12 @@ void Output::updateState(void)
     this->_state = this->_newState;
 }
 
-void Output::setComponent(IComponent &component)
+void Output::addComponent(IComponent &component)
 {
-    this->_component = &component;
+    if (std::find(_components.begin(), _components.end(), &component)
+        != _components.end()) {
+        throw InvalidLinkException(
+            "Output link already exist", "Output::initialise");
+    }
+    this->_components.push_front(&component);
 }

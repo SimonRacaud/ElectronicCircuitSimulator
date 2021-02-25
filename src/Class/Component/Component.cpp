@@ -76,15 +76,24 @@ void Component::simulate(std::size_t tick)
     }
     Component::nbJump++;
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        if (it->second->getComponent() == nullptr)
+        if (it->second->getComponents().size() == 0)
             continue;
         it->second->setNewState(this->compute(it->first));
         it->second->updateState();
     }
+    this->simulateNextNodes(tick);
+}
+
+void Component::simulateNextNodes(size_t tick)
+{
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        if (it->second->getComponent() == nullptr)
+        const std::deque<IComponent *> &compList = it->second->getComponents();
+        if (compList.size() == 0)
             continue;
-        it->second->getComponent()->simulate(tick);
+        std::for_each(
+            compList.begin(), compList.end(), [tick](IComponent *comp) {
+                comp->simulate(tick);
+            });
     }
 }
 
@@ -105,12 +114,16 @@ void Component::setLink(
     auto inPin = otherCom._inputs.find(otherPin);
 
     if (inPin == otherCom._inputs.end()) {
-        throw UndefinedPinException("Input Pin does not exist", "setLink");
+        throw UndefinedPinException(
+            "Input Pin does not exist", "Component::setLink");
+    } else if (inPin->second->getComponent() != nullptr) {
+        throw BusyPinException("Input Pin busy", "Component::setLink");
     }
     if (outPin == this->_outputs.end()) {
-        throw UndefinedPinException("Output Pin does not exist", "setLink");
+        throw UndefinedPinException(
+            "Output Pin does not exist", "Component::setLink");
     }
-    this->_outputs[pin]->initialize(UNDEFINED, other);
+    this->_outputs[pin]->addComponent(other);
     otherCom._inputs[otherPin]->initialize(pin, *this);
 }
 
@@ -135,11 +148,15 @@ void Component::dump() const
     }
     std::cout << "Outputs:" << std::endl;
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        tmp = dynamic_cast<Component *>(it->second->getComponent());
-        if (tmp) {
-            name = tmp->_name;
-            std::cout << "\t" << name << ": "
-                      << stateNames[it->second->getState()] << std::endl;
+        const std::deque<IComponent *> &components =
+            it->second->getComponents();
+        for (auto it2 = components.begin(); it2 != components.end(); it2++) {
+            tmp = dynamic_cast<Component *>(*it2);
+            if (tmp) {
+                name = tmp->_name;
+                std::cout << "\t" << name << ": "
+                          << stateNames[it->second->getState()] << std::endl;
+            }
         }
     }
     std::cout << std::endl;
