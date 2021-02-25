@@ -6,7 +6,7 @@ then
     exit 1
 fi
 
-ref="./nts_binary"
+ref="./tests/nanotekspice_ref2"
 my="$1"
 
 output="/tmp/nts_tests"
@@ -24,9 +24,9 @@ set_test[0, 1]="./tests/set_test/load1.nts"
 
 while [ $i -lt 1 ]
 do
-    cat ${set_test[$i, 0]} | $my ${set_test[$i, 1]} &> $mynts_output
-    cat ${set_test[$i, 0]} | $ref ${set_test[$i, 1]} &> $nts_output
-    diff $mynts_output $nts_output
+    cat ${set_test[$i, 0]} | $my ${set_test[$i, 1]} > $mynts_output
+    cat ${set_test[$i, 0]} | $ref ${set_test[$i, 1]} > $nts_output
+    diff --color=always $mynts_output $nts_output
     ret=$?
     if [ "$ret" = 0 ]
     then
