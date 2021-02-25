@@ -143,8 +143,9 @@ void Parser::parsingFile(const std::string &filepath, Circuit &dest)
         links++;
         mapLinks = Parser::cutAt(' ', links, chipsets);
     }
+    if (mapChipsets.size() == 0 || mapLinks.size() == 0)
+        throw ParsingError("Parsing", "you must have chipsets ans links");
     std::list<std::tuple<std::string, std::string, std::string, std::string>> allLinks = Parser::cleanLink(mapLinks, mapChipsets);
-
     Parser::chipsetLoad(mapChipsets, dest);
     Parser::linkLoad(allLinks, mapChipsets, dest);
 }
