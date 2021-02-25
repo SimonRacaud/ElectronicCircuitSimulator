@@ -16,8 +16,12 @@
 
 using namespace nts;
 
+const size_t MAX_JUMP = 500;
+
 std::unordered_map<Tristate, std::string> Component::TRISTATE_STR = {
     {UNDEFINED, "U"}, {TRUE, "1"}, {FALSE, "0"}};
+
+size_t Component::nbJump = 0;
 
 Component::Component(const std::string &name, ComponentType type)
     : _name(name), _type(type)
@@ -66,6 +70,11 @@ Tristate Component::getState(size_t pinOut)
 
 void Component::simulate(std::size_t tick)
 {
+    if (Component::nbJump > MAX_JUMP) {
+        std::cerr << "Error: infinite loop" << std::endl;
+        return;
+    }
+    Component::nbJump++;
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
         if (it->second->getComponent() == nullptr)
             continue;

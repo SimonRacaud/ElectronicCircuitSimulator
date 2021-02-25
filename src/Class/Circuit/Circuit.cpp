@@ -16,6 +16,7 @@ void Circuit::simulate()
     Component *com;
 
     this->_currentTick++;
+    Component::nbJump = 0;
     for (auto it = _nodes.begin(); it != _nodes.end(); it++) {
         com = dynamic_cast<Component *>(it->second);
         if (com->getType() == INPUT) {
