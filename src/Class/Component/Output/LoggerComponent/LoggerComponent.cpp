@@ -23,8 +23,8 @@ bool LoggerComponent::correctParmasForWrite(void)
         dynamic_cast<Component *>(this->_inputs[9]->getComponent());
     Component *inhibit_component =
         dynamic_cast<Component *>(this->_inputs[10]->getComponent());
-    Tristate clock = clock_component->getState(0);
-    Tristate inhibit = inhibit_component->getState(0);
+    Tristate clock = clock_component->getState(1);
+    Tristate inhibit = inhibit_component->getState(1);
 
     if (clock == TRUE && inhibit == FALSE)
         return true;
@@ -44,20 +44,17 @@ char LoggerComponent::charFromTristate(Tristate state)
     return c;
 }
 
-Tristate LoggerComponent::compute(size_t pin)
+Tristate LoggerComponent::compute(size_t)
 {
     Component *input_pin = NULL;
     Tristate state = UNDEFINED;
     std::ofstream output;
 
-    (void) pin;
     if (this->correctParmasForWrite()) {
         output.open("./log.bin");
         if (output.is_open()) {
-            for (auto it = this->_inputs.begin(); it != this->_inputs.end();
-                 it++) {
-                input_pin =
-                    dynamic_cast<Component *>(it->second->getComponent());
+            for (auto it = this->_inputs.begin(); it != this->_inputs.end(); it++) {
+                input_pin = dynamic_cast<Component *>(it->second->getComponent());
                 state = input_pin->getState(it->first);
                 output << this->charFromTristate(state) << std::endl;
             }
