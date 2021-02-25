@@ -5,6 +5,7 @@ using namespace nts;
 TrueComponent::TrueComponent(const std::string &name) : InputComponent(name)
 {
     this->setState(TRUE);
+    this->_outputs[1]->updateState();
 }
 
 void TrueComponent::simulate(size_t time)

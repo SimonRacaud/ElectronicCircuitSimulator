@@ -5,16 +5,15 @@ using namespace nts;
 FalseComponent::FalseComponent(const std::string &name) : InputComponent(name)
 {
     this->setState(FALSE);
+    this->_outputs[1]->updateState();
 }
 
 void FalseComponent::simulate(size_t time)
 {
     InputComponent::simulate(time);
-    return;
 }
 
-Tristate FalseComponent::compute(size_t pin)
+Tristate FalseComponent::compute(size_t)
 {
-    (void) pin;
     return FALSE;
 }
