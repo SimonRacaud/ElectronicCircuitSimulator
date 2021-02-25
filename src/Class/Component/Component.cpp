@@ -12,6 +12,8 @@
 
 #include "Class/Exception/BusyPinException.hpp"
 #include "Class/Exception/UndefinedPinException.hpp"
+#include "Input/TrueComponent/TrueComponent.hpp"
+#include "Input/FalseComponent/FalseComponent.hpp"
 #include "Component.hpp"
 
 using namespace nts;
@@ -192,10 +194,13 @@ ComponentType Component::getType() const
 
 void Component::setState(Tristate state)
 {
+    TrueComponent *truecom = dynamic_cast<TrueComponent *>(this);
+    FalseComponent *falsecom = dynamic_cast<FalseComponent *>(this);
+
     if (this->_type != INPUT) {
         throw ComponentTypeException(
             "set state not supported", "component::setState");
-    } else {
+    } else if (!truecom && !falsecom) {
         for (auto it = this->_outputs.begin(); it != this->_outputs.end();
              it++) {
             it->second->setNewState(state);

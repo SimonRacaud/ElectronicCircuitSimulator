@@ -4,7 +4,7 @@ using namespace nts;
 
 FalseComponent::FalseComponent(const std::string &name) : InputComponent(name)
 {
-    this->setState(FALSE);
+    this->_outputs[1]->setNewState(FALSE);
     this->_outputs[1]->updateState();
 }
 
