@@ -29,9 +29,9 @@ size_t Input::getPinOut() const
     return this->_pinOut;
 }
 
-IComponent &Input::getComponent() const
+IComponent *Input::getComponent() const
 {
-    return *this->_component;
+    return this->_component;
 }
 
 void Input::setPinOut(size_t pinOut)

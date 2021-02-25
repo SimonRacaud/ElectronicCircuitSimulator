@@ -26,7 +26,7 @@ namespace nts
         void initialize(size_t pinOut, IComponent &component);
 
         size_t getPinOut() const;
-        IComponent &getComponent() const;
+        IComponent *getComponent() const;
 
         void setPinOut(size_t pin);
         void setComponent(IComponent &component);

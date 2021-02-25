@@ -20,6 +20,6 @@ void InputComponent::simulate(size_t tick)
 {
     this->_outputs[1]->updateState();
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        it->second->getComponent().simulate(tick);
+        it->second->getComponent()->simulate(tick);
     }
 }

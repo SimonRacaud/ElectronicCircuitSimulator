@@ -20,5 +20,7 @@ NotGate::NotGate(Input &a) : Gate(a, a)
 
 Tristate NotGate::compute(void)
 {
-    return !_a->getState();
+    Tristate a = _a ? _a->getState() : UNDEFINED;
+
+    return !a;
 }

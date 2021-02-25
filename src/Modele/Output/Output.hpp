@@ -13,7 +13,7 @@ namespace nts
         void initialize(Tristate state, IComponent &component);
 
         Tristate getState() const;
-        IComponent &getComponent() const;
+        IComponent *getComponent() const;
 
         void setNewState(Tristate state);
         void updateState(void);

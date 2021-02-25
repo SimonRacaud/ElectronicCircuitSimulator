@@ -29,9 +29,9 @@ Tristate Output::getState() const
     return _state;
 }
 
-IComponent &Output::getComponent() const
+IComponent *Output::getComponent() const
 {
-    return *_component;
+    return _component;
 }
 
 void Output::setNewState(Tristate state)

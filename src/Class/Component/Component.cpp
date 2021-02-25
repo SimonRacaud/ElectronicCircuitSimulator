@@ -67,11 +67,15 @@ Tristate Component::getState(size_t pinOut)
 void Component::simulate(std::size_t tick)
 {
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
+        if (it->second->getComponent() == nullptr)
+            continue;
         it->second->setNewState(this->compute(it->first));
         it->second->updateState();
     }
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        it->second->getComponent().simulate(tick);
+        if (it->second->getComponent() == nullptr)
+            continue;
+        it->second->getComponent()->simulate(tick);
     }
 }
 
@@ -114,7 +118,7 @@ void Component::dump() const
               << std::endl;
     std::cout << "Inputs:" << std::endl;
     for (auto it = this->_inputs.begin(); it != this->_inputs.end(); it++) {
-        tmp = dynamic_cast<Component *>(&it->second->getComponent());
+        tmp = dynamic_cast<Component *>(it->second->getComponent());
         if (tmp) {
             std::cout << "\t" << tmp->_name << " : "
                       << stateNames[it->second->getState()] << std::endl;
@@ -122,7 +126,7 @@ void Component::dump() const
     }
     std::cout << "Outputs:" << std::endl;
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
-        tmp = dynamic_cast<Component *>(&it->second->getComponent());
+        tmp = dynamic_cast<Component *>(it->second->getComponent());
         if (tmp) {
             name = tmp->_name;
             std::cout << "\t" << name << ": "

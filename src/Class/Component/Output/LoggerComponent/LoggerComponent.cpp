@@ -7,9 +7,9 @@ using namespace nts;
 LoggerComponent::LoggerComponent(const std::string &name)
     : Component(name, OUTPUT)
 {
-	size_t pin_in[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    size_t pin_in[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-	this->createInputs(pin_in, 10);
+    this->createInputs(pin_in, 10);
 }
 
 /*
@@ -20,9 +20,9 @@ LoggerComponent::LoggerComponent(const std::string &name)
 bool LoggerComponent::correctParmasForWrite(void)
 {
     Component *clock_component =
-        dynamic_cast<Component *>(&this->_inputs[9]->getComponent());
+        dynamic_cast<Component *>(this->_inputs[9]->getComponent());
     Component *inhibit_component =
-        dynamic_cast<Component *>(&this->_inputs[10]->getComponent());
+        dynamic_cast<Component *>(this->_inputs[10]->getComponent());
     Tristate clock = clock_component->getState(0);
     Tristate inhibit = inhibit_component->getState(0);
 
@@ -57,7 +57,7 @@ Tristate LoggerComponent::compute(size_t pin)
             for (auto it = this->_inputs.begin(); it != this->_inputs.end();
                  it++) {
                 input_pin =
-                    dynamic_cast<Component *>(&it->second->getComponent());
+                    dynamic_cast<Component *>(it->second->getComponent());
                 state = input_pin->getState(it->first);
                 output << this->charFromTristate(state) << std::endl;
             }

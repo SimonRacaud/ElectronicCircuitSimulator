@@ -20,5 +20,8 @@ OrGate::OrGate(Input &a, Input &b) : Gate(a, b)
 
 Tristate OrGate::compute(void)
 {
-    return (_a->getState() | _b->getState());
+    Tristate a = _a ? _a->getState() : UNDEFINED;
+    Tristate b = _b ? _b->getState() : UNDEFINED;
+
+    return a | b;
 }
