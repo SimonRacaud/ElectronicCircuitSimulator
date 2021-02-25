@@ -51,12 +51,14 @@ Tristate LoggerComponent::compute(size_t)
     std::ofstream output;
 
     if (this->correctParmasForWrite()) {
-        output.open("./log.bin");
+        output.open("./log.bin", std::ostream::trunc);
         if (output.is_open()) {
             for (auto it = this->_inputs.begin(); it != this->_inputs.end(); it++) {
-                input_pin = dynamic_cast<Component *>(it->second->getComponent());
-                state = input_pin->getState(it->first);
-                output << this->charFromTristate(state) << std::endl;
+                if (it->first != 9 && it->first != 10) {
+                    input_pin = dynamic_cast<Component *>(it->second->getComponent());
+                    state = input_pin->getState(it->second->getPinOut());
+                    output << this->charFromTristate(state) << std::endl;
+                }
             }
             output.close();
         } else {
