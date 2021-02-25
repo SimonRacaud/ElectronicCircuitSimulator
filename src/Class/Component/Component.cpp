@@ -105,10 +105,14 @@ void Component::setLink(
     auto inPin = otherCom._inputs.find(otherPin);
 
     if (inPin == otherCom._inputs.end()) {
-        throw UndefinedPinException("Input Pin does not exist", "setLink");
+        throw UndefinedPinException(
+            "Input Pin does not exist", "Component::setLink");
+    } else if (inPin->second->getComponent() != nullptr) {
+        throw BusyPinException("Input Pin busy", "Component::setLink");
     }
     if (outPin == this->_outputs.end()) {
-        throw UndefinedPinException("Output Pin does not exist", "setLink");
+        throw UndefinedPinException(
+            "Output Pin does not exist", "Component::setLink");
     }
     this->_outputs[pin]->initialize(UNDEFINED, other);
     otherCom._inputs[otherPin]->initialize(pin, *this);
