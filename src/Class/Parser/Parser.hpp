@@ -23,6 +23,7 @@
 #define LINKS    ".links:"
 #define POUTPUT  "output "
 #define CHIPSETS ".chipsets:"
+#define MAXLOAD 500
 
 namespace nts
 {

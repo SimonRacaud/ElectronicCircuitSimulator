@@ -64,7 +64,7 @@ std::list<std::string> Parser::readFile(const std::string &filepath)
     std::string line;
 
     if (myfile.is_open()) {
-        while (std::getline(myfile, line)) {
+        for (size_t i = 0; std::getline(myfile, line) && i < MAXLOAD; i++) {
             all_file.push_back(line);
         }
     } else {
