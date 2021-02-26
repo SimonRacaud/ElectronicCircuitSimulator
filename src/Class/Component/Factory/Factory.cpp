@@ -10,6 +10,7 @@
 #include "Class/Component/Other/4069/C4069.hpp"
 #include "Class/Component/Other/4071/C4071.hpp"
 #include "Class/Component/Other/4081/C4081.hpp"
+#include "Class/Component/Other/4008/C4008.hpp"
 #include "Class/Component/Output/LoggerComponent/LoggerComponent.hpp"
 #include "Class/Component/Output/OutputComponent.hpp"
 #include "Factory.hpp"
@@ -70,6 +71,10 @@ FactoryComponent::FactoryComponent(std::string name) : _componentName(name)
         {"4013",
             [this]() {
                 return new C4013(this->_componentName);
+            }},
+        {"4008",
+            [this]() {
+                return new C4008(this->_componentName);
             }},
     };
 }
