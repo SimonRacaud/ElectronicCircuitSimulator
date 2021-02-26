@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include "Class/Component/Component.hpp"
+#include "Class/Exception/UndefinedPinException.hpp"
 
 namespace nts
 {
