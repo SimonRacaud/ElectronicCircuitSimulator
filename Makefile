@@ -50,6 +50,9 @@ all:    $(NAME)
 $(NAME):    $(OBJ)
 		g++ -o $(NAME) $(OBJ)
 
+sre:
+	make fclean ; make -j8
+
 clean:
 		rm -f $(OBJ)
 
