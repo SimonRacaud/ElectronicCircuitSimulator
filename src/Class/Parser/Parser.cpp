@@ -41,6 +41,9 @@ void Parser::cleanComment(std::list<std::string> &file)
     size_t found = 0;
 
     for (std::list<std::string>::iterator it = file.begin(); it != file.end();) {
+        for (std::string::iterator string = (*it).begin(); string != (*it).end(); string++)
+            if (iswspace(*string) != 0)
+                *string = ' ';
         found = (*it).find(COMMENT);
         if (found == 0 || Parser::emptyLine(*it)) {
             tmp = it;
