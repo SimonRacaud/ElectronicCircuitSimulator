@@ -52,7 +52,6 @@ void Parser::cleanComment(std::list<std::string> &file)
         } else if (found != std::string::npos) {
             (*it).erase(found, (*it).length() - found);
             Parser::cleanLine(*it);
-            it++;
         } else {
             Parser::cleanLine(*it);
             it++;
@@ -74,6 +73,8 @@ std::list<std::string> Parser::readFile(const std::string &filepath)
         throw ParsingError("Parsing", "Can't open file");
     }
     Parser::cleanComment(all_file);
+    for (std::list<std::string>::iterator it = all_file.begin(); it != all_file.end(); it++)
+        std::cout << *it << std::endl;
     return all_file;
 }
 
