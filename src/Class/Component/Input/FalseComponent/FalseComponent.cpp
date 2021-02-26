@@ -17,3 +17,8 @@ Tristate FalseComponent::compute(size_t)
 {
     return FALSE;
 }
+
+ComponentContent *FalseComponent::getContent() const
+{
+    return nullptr;
+}

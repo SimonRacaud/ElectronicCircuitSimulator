@@ -174,7 +174,7 @@ void Component::dump() const
     std::cout << std::endl;
 }
 
-ComponentContent &Component::getContent() const
+ComponentContent *Component::getContent() const
 {
     std::unordered_map<size_t, Tristate> pinsState;
 
@@ -189,7 +189,7 @@ ComponentContent &Component::getContent() const
             pinsState[it->first] = it->second->getState();
         }
     }
-    return *(new ComponentContent(_name, _type, pinsState));
+    return new ComponentContent(_name, _type, pinsState);
 }
 
 const std::string &Component::getName() const

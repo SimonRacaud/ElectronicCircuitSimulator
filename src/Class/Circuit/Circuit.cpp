@@ -32,16 +32,19 @@ void Circuit::dump() const
     }
 }
 
-std::deque<ComponentContent *> &Circuit::getContent() const
+std::deque<ComponentContent *> &Circuit::getCircuitContent() const
 {
     std::deque<ComponentContent *> *content =
         new std::deque<ComponentContent *>;
     Component *c;
+    ComponentContent *ptr;
 
     for (auto it = _nodes.begin(); it != _nodes.end(); it++) {
         c = dynamic_cast<Component *>(it->second);
         if (c->getType() == INPUT || c->getType() == OUTPUT) {
-            content->push_back(&c->getContent());
+            ptr = c->getContent();
+            if (nullptr != ptr)
+                content->push_back(ptr);
         }
     }
     std::sort(content->begin(), content->end(),

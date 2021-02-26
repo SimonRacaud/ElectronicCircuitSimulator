@@ -83,7 +83,8 @@ void CommandLine::displayCmd()
 {
     if (this->_circuit) {
         std::cout << "tick: " << this->_circuit->getTick() << std::endl;
-        std::deque<ComponentContent *> &content = this->_circuit->getContent();
+        std::deque<ComponentContent *> &content =
+            this->_circuit->getCircuitContent();
         this->_displayCmdInOut(ComponentType::INPUT, content);
         this->_displayCmdInOut(ComponentType::OUTPUT, content);
         while (content.empty() == false) {
