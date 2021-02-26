@@ -73,8 +73,6 @@ std::list<std::string> Parser::readFile(const std::string &filepath)
         throw ParsingError("Parsing", "Can't open file");
     }
     Parser::cleanComment(all_file);
-    for (std::list<std::string>::iterator it = all_file.begin(); it != all_file.end(); it++)
-        std::cout << *it << std::endl;
     return all_file;
 }
 
