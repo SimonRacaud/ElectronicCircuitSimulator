@@ -1,4 +1,3 @@
-#include <fstream>
 #include "Class/Exception/OpenFileException.hpp"
 #include "LoggerComponent.hpp"
 
@@ -10,6 +9,14 @@ LoggerComponent::LoggerComponent(const std::string &name)
     size_t pin_in[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
     this->createInputs(pin_in, 10);
+    this->_outputFile.open("./log.bin", std::ostream::trunc);
+    if (!this->_outputFile.is_open())
+        throw OpenFileException("Can't open file", "LoggerComponent");
+}
+
+LoggerComponent::~LoggerComponent()
+{
+    this->_outputFile.close();
 }
 
 /*
@@ -31,40 +38,41 @@ bool LoggerComponent::correctParmasForWrite(void)
     return false;
 }
 
-char LoggerComponent::charFromTristate(Tristate state)
+size_t LoggerComponent::binFromTristate(size_t pin)
 {
-    char c = '\0';
+    Component *input_pin = dynamic_cast<Component *>(this->_inputs[pin]->getComponent());
+    Tristate state = input_pin->getState(this->_inputs[pin]->getPinOut());
 
-    switch (state) {
-        case TRUE: c = 'T'; break;
-        case FALSE: c = 'F'; break;
-        case UNDEFINED: c = 'U'; break;
-        default: c = '\0'; break;
+    if (state == TRUE) {
+        return 1;
+    } else if (state == FALSE) {
+        return 0;
+    } else {
+        //throw 
+        return 0;
     }
-    return c;
 }
 
 Tristate LoggerComponent::compute(size_t)
 {
-    Component *input_pin = NULL;
-    Tristate state = UNDEFINED;
-    std::ofstream output;
+    size_t value = 0;
 
     if (this->correctParmasForWrite()) {
-        output.open("./log.bin", std::ostream::trunc);
-        if (output.is_open()) {
-            for (auto it = this->_inputs.begin(); it != this->_inputs.end(); it++) {
-                if (it->first != 9 && it->first != 10) {
-                    input_pin = dynamic_cast<Component *>(it->second->getComponent());
-                    state = input_pin->getState(it->second->getPinOut());
-                    output << this->charFromTristate(state) << std::endl;
-                }
-            }
-            output.close();
+        if (this->_outputFile.is_open()) {
+            value += this->binFromTristate(1) * 1;
+            value += this->binFromTristate(2) * 2;
+            value += this->binFromTristate(3) * 4;
+            value += this->binFromTristate(4) * 8;
+            value += this->binFromTristate(5) * 16;
+            value += this->binFromTristate(6) * 32;
+            value += this->binFromTristate(7) * 64;
+            value += this->binFromTristate(8) * 128;
+            this->_outputFile << (char) value;
         } else {
             throw OpenFileException("Can't open file", "LoggerComponent");
         }
     }
+    this->_outputFile.flush();
     return UNDEFINED;
 }
 
