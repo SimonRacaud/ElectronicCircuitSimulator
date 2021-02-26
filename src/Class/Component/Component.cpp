@@ -36,12 +36,12 @@ Component::~Component()
     std::unordered_map<size_t, Input *>::iterator itIn;
 
     while (this->_outputs.empty() == false) {
-        itOut = this->_outputs.erase(this->_outputs.begin());
-        delete &(*itOut);
+        delete this->_outputs.begin()->second;
+        this->_outputs.erase(this->_outputs.begin());
     }
     while (this->_inputs.empty() == false) {
-        itIn = this->_inputs.erase(this->_inputs.begin());
-        delete &(*itIn);
+        delete this->_inputs.begin()->second;
+        this->_inputs.erase(this->_inputs.begin());
     }
 }
 
@@ -94,6 +94,11 @@ void Component::simulate(std::size_t tick)
         this->_computeCalls = 0;
     }
     this->simulateNextNodes(tick);
+}
+
+bool Component::isLastCompute(void) const
+{
+    return this->_computeCalls == this->_connectedInPins;
 }
 
 void Component::simulateNextNodes(size_t tick)
@@ -174,7 +179,7 @@ void Component::dump() const
     std::cout << std::endl;
 }
 
-ComponentContent &Component::getContent() const
+ComponentContent *Component::getContent() const
 {
     std::unordered_map<size_t, Tristate> pinsState;
 
@@ -189,7 +194,7 @@ ComponentContent &Component::getContent() const
             pinsState[it->first] = it->second->getState();
         }
     }
-    return *(new ComponentContent(_name, _type, pinsState));
+    return new ComponentContent(_name, _type, pinsState);
 }
 
 const std::string &Component::getName() const

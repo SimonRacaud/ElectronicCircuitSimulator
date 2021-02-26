@@ -23,26 +23,35 @@
 #    clock -9-+    +-10- inhibit
 
 .chipsets:
-input in_001
-input in_002
+input in_001# oui mon ruf
+input in_002  ## ouin memed
+#yes mon ruf
+
+
+
+
 input in_004
+#
 input in_008
-input in_016
+input in_016#oui#non
 input in_032
-input in_064
-input in_128
-clock clock
+input in_064##oui#1
+input in_128 #1#1
+clock clock#1#1
+        ###
 input inhibit
 logger logger
 
-.links:
-in_001:1 logger:1
+.links:#####			###
+			in_001:1			logger:1			
 in_002:1 logger:2
 in_004:1 logger:3
-in_008:1 logger:4
-in_016:1 logger:5
-in_032:1 logger:6
-in_064:1 logger:7
+in_008:1			logger:4
+#
+in_016:1 logger:5				
+in_032:1 logger:6#in_032:1 logger:6
+in_064:1			logger:7 ###   ### " # "#
 in_128:1 logger:8
-clock:1 logger:9
-inhibit:1 logger:10
+			clock:1				logger:9				
+			#FGHJIKOPOIKJHGVFGHUJIKO####
+inhibit:1	logger:10	

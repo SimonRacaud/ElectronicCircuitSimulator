@@ -19,3 +19,8 @@ Tristate TrueComponent::compute(size_t pin)
     (void) pin;
     return TRUE;
 }
+
+ComponentContent *TrueComponent::getContent() const
+{
+    return nullptr;
+}

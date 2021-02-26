@@ -32,7 +32,7 @@ namespace nts
         void simulate();
         void dump() const;
 
-        std::deque<ComponentContent *> &getContent() const;
+        std::deque<ComponentContent *> &getCircuitContent() const;
         void addNode(IComponent &component);
         void setNodeLink(const std::string &nameNodeA, std::size_t pinOutA,
             const std::string &nameNodeB, std::size_t pinInB);

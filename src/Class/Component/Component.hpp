@@ -49,9 +49,10 @@ namespace nts
         void dump() const;
 
         Tristate getState(size_t pinOut);
-        ComponentContent &getContent() const;
+        virtual ComponentContent *getContent() const;
         const std::string &getName() const;
         ComponentType getType() const;
+        bool isLastCompute(void) const;
 
         void setState(Tristate state);
 

@@ -31,8 +31,9 @@ C4069::C4069(std::string const &name) : Component(name, OTHER), _nbGate(6)
 
 C4069::~C4069()
 {
-    for (size_t i = 0; i < _nbGate; i++) {
-        delete this->_gate[i];
+    while (this->_gate.empty() == false) {
+        delete this->_gate.begin()->second;
+        this->_gate.erase(this->_gate.begin());
     }
 }
 
