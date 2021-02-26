@@ -29,6 +29,9 @@ int main(int ac, char **av)
         }
         cl.setCircuit(circ);
         cl.loop();
+    } else {
+        return 84;
     }
     delete circ;
+    return 0;
 }
