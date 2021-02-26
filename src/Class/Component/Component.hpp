@@ -28,6 +28,8 @@ namespace nts
       protected:
         std::string _name;
         ComponentType _type;
+        size_t _computeCalls;
+        size_t _connectedInPins;
         std::unordered_map<size_t, Input *> _inputs;
         std::unordered_map<size_t, Output *> _outputs;
 

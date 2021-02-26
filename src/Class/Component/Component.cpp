@@ -12,9 +12,9 @@
 
 #include "Class/Exception/BusyPinException.hpp"
 #include "Class/Exception/UndefinedPinException.hpp"
-#include "Input/TrueComponent/TrueComponent.hpp"
-#include "Input/FalseComponent/FalseComponent.hpp"
 #include "Component.hpp"
+#include "Input/FalseComponent/FalseComponent.hpp"
+#include "Input/TrueComponent/TrueComponent.hpp"
 
 using namespace nts;
 
@@ -26,7 +26,7 @@ std::unordered_map<Tristate, std::string> Component::TRISTATE_STR = {
 size_t Component::nbJump = 0;
 
 Component::Component(const std::string &name, ComponentType type)
-    : _name(name), _type(type)
+    : _name(name), _type(type), _computeCalls(0), _connectedInPins(0)
 {
 }
 
@@ -76,12 +76,22 @@ void Component::simulate(std::size_t tick)
         std::cerr << "Error: infinite loop" << std::endl;
         return;
     }
+    if (this->_connectedInPins == 0) {
+        this->_connectedInPins =
+            std::count_if(_inputs.begin(), _inputs.end(), [](auto el) {
+                return el.second->getComponent() != nullptr;
+            });
+    }
     Component::nbJump++;
+    this->_computeCalls++;
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {
         if (it->second->getComponents().size() == 0)
             continue;
         it->second->setNewState(this->compute(it->first));
         it->second->updateState();
+    }
+    if (this->_computeCalls == this->_connectedInPins) {
+        this->_computeCalls = 0;
     }
     this->simulateNextNodes(tick);
 }
