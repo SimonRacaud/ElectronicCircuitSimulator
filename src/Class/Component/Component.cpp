@@ -96,6 +96,11 @@ void Component::simulate(std::size_t tick)
     this->simulateNextNodes(tick);
 }
 
+bool Component::isLastCompute(void) const
+{
+    return this->_computeCalls == this->_connectedInPins;
+}
+
 void Component::simulateNextNodes(size_t tick)
 {
     for (auto it = this->_outputs.begin(); it != this->_outputs.end(); it++) {

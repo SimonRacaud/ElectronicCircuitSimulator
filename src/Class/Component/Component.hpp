@@ -52,6 +52,7 @@ namespace nts
         virtual ComponentContent *getContent() const;
         const std::string &getName() const;
         ComponentType getType() const;
+        bool isLastCompute(void) const;
 
         void setState(Tristate state);
 
