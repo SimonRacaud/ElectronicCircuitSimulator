@@ -88,6 +88,7 @@ void CommandLine::displayCmd()
         this->_displayCmdInOut(ComponentType::INPUT, content);
         this->_displayCmdInOut(ComponentType::OUTPUT, content);
         while (content.empty() == false) {
+            delete *content.begin();
             content.erase(content.begin());
         }
         delete &content;

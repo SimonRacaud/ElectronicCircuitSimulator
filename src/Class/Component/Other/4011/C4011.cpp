@@ -29,8 +29,9 @@ C4011::C4011(std::string const &name) : Component(name, OTHER), _nbGate(4)
 
 C4011::~C4011()
 {
-    for (size_t i = 0; i < _nbGate; i++) {
-        delete this->_gate[i];
+    while (this->_gate.empty() == false) {
+        delete this->_gate.begin()->second;
+        this->_gate.erase(this->_gate.begin());
     }
 }
 

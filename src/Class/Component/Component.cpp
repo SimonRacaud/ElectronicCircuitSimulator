@@ -36,12 +36,12 @@ Component::~Component()
     std::unordered_map<size_t, Input *>::iterator itIn;
 
     while (this->_outputs.empty() == false) {
-        itOut = this->_outputs.erase(this->_outputs.begin());
-        delete &(*itOut);
+        delete this->_outputs.begin()->second;
+        this->_outputs.erase(this->_outputs.begin());
     }
     while (this->_inputs.empty() == false) {
-        itIn = this->_inputs.erase(this->_inputs.begin());
-        delete &(*itIn);
+        delete this->_inputs.begin()->second;
+        this->_inputs.erase(this->_inputs.begin());
     }
 }
 

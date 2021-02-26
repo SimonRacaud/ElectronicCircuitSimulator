@@ -9,6 +9,10 @@ Circuit::Circuit(const std::string &name, ComponentType type)
 
 Circuit::~Circuit()
 {
+    while (this->_nodes.empty() == false) {
+        delete this->_nodes.begin()->second;
+        this->_nodes.erase(this->_nodes.begin());
+    }
 }
 
 void Circuit::simulate()
