@@ -37,6 +37,7 @@ SRC_COMPONENT = /Component.cpp											\
 				/Other/4069/C4069.cpp									\
 				/Other/4071/C4071.cpp									\
 				/Other/4081/C4081.cpp									\
+				/Other/4013/C4013.cpp									\
 
 OBJ =   $(SRC:.cpp=.o)
 
