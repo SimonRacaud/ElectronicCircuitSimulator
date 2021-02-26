@@ -12,6 +12,7 @@
 #include "Class/Component/Other/4069/C4069.hpp"
 #include "Class/Component/Other/4071/C4071.hpp"
 #include "Class/Component/Other/4081/C4081.hpp"
+#include "Class/Component/Other/4008/C4008.hpp"
 
 using namespace nts;
 
@@ -30,6 +31,7 @@ FactoryComponent::FactoryComponent(std::string name) : _componentName(name)
         {"4069", [this]() {return new C4069(this->_componentName);}},
         {"4071", [this]() {return new C4071(this->_componentName);}},
         {"4081", [this]() {return new C4081(this->_componentName);}},
+        {"4008", [this]() {return new C4008(this->_componentName);}},
     };
 }
 
