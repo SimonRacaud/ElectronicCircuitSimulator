@@ -1,6 +1,6 @@
 # ElectronicCircuitSimulator
 
-Basic electronic circuit simulator. It loads a circuit from a configuration file and allows you to simulate its operation.
+A basic electronic circuit simulator that loads a circuit from a configuration file and simulates its behavior.
 
 # Compilation and Installation
 
